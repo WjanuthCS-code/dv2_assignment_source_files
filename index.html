@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Fading Chorus: Australia's Frogs</title>
+  <meta name="description" content="A data story about Australian frogs: which species are declining, which are recovering, and when they breed.">
+  <meta name="author" content="[Your Name]">
+
+  <!-- Fonts: Fraunces (headings) + Source Sans 3 (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Pure.css grid (as used in the FIT3179 studios) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Vega, Vega-Lite, Vega-Embed -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.33.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.23.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.29.0"></script>
+</head>
+<body>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="wrap">
+      <p class="kicker">A data story about Australian frogs</p>
+      <h1>The Fading Chorus</h1>
+      <p class="lede">Australia is home to more than 240 kinds of frog, and almost all of them live nowhere else on Earth.
+        Since the 1980s, many have quietly disappeared from the creeks and swamps where they once called.
+        This page follows the data: who is declining, who is bouncing back, and when frogs sing.</p>
+      <p class="byline">By <strong>[Your Name]</strong> · FIT3179 Data Visualisation 2 · October 2026</p>
+
+      <div class="pure-g stats">
+        <div class="pure-u-1-2 pure-u-md-1-4"><div class="stat"><span class="num">1.18M</span><span class="lbl">frog calls recorded by citizen scientists with FrogID (2017–2024)</span></div></div>
+        <div class="pure-u-1-2 pure-u-md-1-4"><div class="stat"><span class="num">215</span><span class="lbl">species heard in those recordings</span></div></div>
+        <div class="pure-u-1-2 pure-u-md-1-4"><div class="stat"><span class="num">53</span><span class="lbl">frogs listed as threatened or extinct nationally</span></div></div>
+        <div class="pure-u-1-2 pure-u-md-1-4"><div class="stat alarm"><span class="num">−97%</span><span class="lbl">average fall in threatened frog numbers since 1985</span></div></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============ 1. MEET THE FROGS ============ -->
+    <section id="meet">
+      <div class="wrap">
+        <p class="section-num">01</p>
+        <h2>Meet Australia's frogs</h2>
+        <p class="intro">Australian frogs belong to a handful of families. Tree frogs and the ground-dwelling "froglets" make up most of the species we hear.
+          Each box below is one species: switch between counting <em>species</em> and counting <em>recordings</em> to see how a few common frogs dominate what people hear,
+          while threatened species (coloured) are rarely heard at all.</p>
+        <div id="vis_treemap" class="vis vis-wide"></div>
+        <p class="note">Only 24 of the 53 nationally threatened frogs appear in FrogID's public records. The others are extinct, too rare to be recorded,
+          or have their records withheld to protect them.</p>
+      </div>
+    </section>
+
+    <!-- ============ 2. A SILENT CRISIS ============ -->
+    <section id="crisis" class="alt">
+      <div class="wrap">
+        <p class="section-num">02</p>
+        <h2>A silent crisis</h2>
+        <p class="intro">Scientists have counted threatened frogs at hundreds of sites for decades. Combined into a single index, the numbers tell a stark story:
+          on average, threatened frog populations are now around 3% of what they were in 1985. A major cause is <strong>chytrid</strong>, a fungal disease that
+          attacks frogs' skin, which they use to breathe and drink.</p>
+        <div id="vis_trend" class="vis vis-wide"></div>
+
+        <div class="pure-g gutter">
+          <div class="pure-u-1 pure-u-md-1-2">
+            <div id="vis_choropleth" class="vis"></div>
+          </div>
+          <div class="pure-u-1 pure-u-md-1-2">
+            <div id="vis_waffle" class="vis"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3. DECLINE AND RECOVERY ============ -->
+    <section id="trends">
+      <div class="wrap">
+        <p class="section-num">03</p>
+        <h2>Who is declining, who is recovering?</h2>
+        <p class="intro">Not every threatened frog is losing ground. Comparing the first and last count at each monitoring site shows some species are recovering
+          while others continue to slide.</p>
+        <div id="vis_diverging" class="vis vis-wide"></div>
+        <div class="pure-g gutter">
+          <div class="pure-u-1 pure-u-md-3-5">
+            <div id="vis_sitemap" class="vis"></div>
+          </div>
+          <div class="pure-u-1 pure-u-md-2-5">
+            <div class="aside">
+              <h3>Reading the map</h3>
+              <p>Scientists survey threatened frogs at hundreds of sites, mostly in the south-east where the biggest programs run.
+                Large circles in Victoria and the Snowy Mountains are long-running programs for the Southern Bell Frog and the corroboree frogs.</p>
+              <p>Red regions are where most sites now have fewer frogs than when monitoring began; blue regions are where most have more.
+                Site locations are shown only by region to protect the frogs.</p>
+            </div>
+          </div>
+        </div>
+        <div id="vis_timeline" class="vis vis-wide"></div>
+        <p class="note">Some of the most endangered frogs have the thinnest records. With so few sites counted in recent years,
+          we know less about how they are doing today. That is why citizen science matters.</p>
+      </div>
+    </section>
+
+    <!-- ============ 4. WHEN FROGS BREED ============ -->
+    <section id="breeding" class="alt">
+      <div class="wrap">
+        <p class="section-num">04</p>
+        <h2>When frogs breed</h2>
+        <p class="intro">Male frogs call to attract a mate, so a frog call is a sign of breeding. Recordings from FrogID show each species has its own season.</p>
+        <div class="pure-g gutter">
+          <div class="pure-u-1 pure-u-md-2-5">
+            <div id="vis_radial" class="vis"></div>
+          </div>
+          <div class="pure-u-1 pure-u-md-3-5">
+            <div id="vis_ridgeline" class="vis"></div>
+          </div>
+        </div>
+        <div id="vis_seasonmaps" class="vis vis-wide"></div>
+      </div>
+    </section>
+
+    <!-- ============ 5. THE INVADER ============ -->
+    <section id="toad">
+      <div class="wrap">
+        <p class="section-num">05</p>
+        <h2>The invader</h2>
+        <p class="intro">Cane Toads were released in Queensland in 1935 to control beetles in sugarcane. They are poisonous to many native animals and now
+          spread across northern Australia.</p>
+        <div id="vis_toadmap" class="vis vis-wide"></div>
+      </div>
+    </section>
+
+    <!-- ============ WHAT YOU CAN DO / CONCLUSION ============ -->
+    <section id="end" class="alt">
+      <div class="wrap narrow">
+        <h2>Keep the chorus going</h2>
+        <p>Every recording counts. FrogID's 1.18 million calls were collected by ordinary Australians with a phone.
+          Recording frogs near you helps scientists track where species are holding on, and where they are disappearing.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ METADATA / SOURCES ============ -->
+  <footer>
+    <div class="wrap">
+      <h3>About this visualisation</h3>
+      <div class="pure-g gutter">
+        <div class="pure-u-1 pure-u-md-1-2">
+          <h4>Data sources</h4>
+          <ul class="sources">
+            <li><strong>Threatened Frog Index 2025</strong>: trend and monitoring time series, Threatened Species Index (TSX), TERN / The University of Queensland.
+              <a href="https://tsx.org.au/tsx2025">tsx.org.au</a>. Downloaded 11 Oct 2026.</li>
+            <li><strong>EPBC Act threatened species list</strong> (extracted 28 Aug 2026), Department of Climate Change, Energy, the Environment and Water, via
+              <a href="https://data.gov.au/data/dataset/threatened-species-state-lists">data.gov.au</a>. CC BY 3.0 AU.</li>
+            <li><strong>FrogID</strong>, Australian Museum, accessed through the
+              <a href="https://collections.ala.org.au/public/show/dr14760">Atlas of Living Australia</a>
+              (download DOI <a href="https://doi.org/10.26197/ala.7c8996cd-871e-470b-b02b-cd4b29922351">10.26197/ala.7c8996cd</a>). CC BY-NC 4.0.
+              Locations of sensitive species are blurred to about 11 km by FrogID.</li>
+            <li><strong>State boundaries</strong>: <a href="https://github.com/rowanhogan/australian-states">rowanhogan/australian-states</a>
+              (derived from ABS boundaries), converted to TopoJSON with mapshaper.</li>
+          </ul>
+        </div>
+        <div class="pure-u-1 pure-u-md-1-2">
+          <h4>Notes</h4>
+          <p>All files are used as downloaded. The only change: the FrogID record download was reduced from 59 to the 8 columns used here
+            (no rows or values changed) to keep the page fast. All filtering, counting and joining happens inside the Vega-Lite specifications.</p>
+          <h4>Author</h4>
+          <p>[Your Name], [Student ID] · Created October 2026 for FIT3179, Monash University.</p>
+          <h4>Use of AI</h4>
+          <p>Generative AI (Claude, Anthropic) was used to help find data sources, draft chart code and proofread text.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/theme.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

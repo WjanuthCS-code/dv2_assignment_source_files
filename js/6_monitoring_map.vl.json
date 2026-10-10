@@ -1,0 +1,83 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Proportional symbol map: TSX frog monitoring regions. Circle size = number of monitored sites; colour = share of sites where the latest count was lower than the first.",
+  "title": {
+    "text": "Where frogs are being watched",
+    "subtitle": "Each circle is a monitoring region. Click a legend colour to highlight regions."
+  },
+  "width": "container",
+  "height": 430,
+  "projection": {"type": "conicEqualArea", "parallels": [-18, -36], "rotate": [-133, 0]},
+  "layer": [
+    {
+      "data": {"url": "data/australia_states.topojson", "format": {"type": "topojson", "feature": "states"}},
+      "mark": {"type": "geoshape", "fill": "#e2dfd2", "stroke": "#ffffff", "strokeWidth": 1}
+    },
+    {
+      "data": {"url": "data/tsx_frog_timeseries.csv"},
+      "transform": [
+        {"fold": ["1950", "1951", "1952", "1953", "1954", "1955", "1956", "1957", "1958", "1959", "1960", "1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"], "as": ["year", "count"]},
+        {"filter": "isValid(datum.count) && datum.count !== ''"},
+        {"calculate": "toNumber(datum.year)", "as": "yr"},
+        {"calculate": "toNumber(datum.count)", "as": "count_num"},
+        {
+          "aggregate": [
+            {"op": "argmin", "field": "yr", "as": "first"},
+            {"op": "argmax", "field": "yr", "as": "last"},
+            {"op": "count", "as": "n_years"}
+          ],
+          "groupby": ["TimeSeriesID", "CommonName", "FunctionalGroup", "Region", "RegionCentroidLatitude", "RegionCentroidLongitude", "State"]
+        },
+        {"filter": "datum.n_years >= 2"},
+        {
+          "calculate": "datum.last.count_num > datum.first.count_num ? 'Increased' : datum.last.count_num < datum.first.count_num ? 'Decreased' : 'No change'",
+          "as": "trend"
+        },
+        {"calculate": "datum.trend == 'Decreased' ? 1 : 0", "as": "is_down"},
+        {"calculate": "datum.trend == 'Increased' ? 1 : 0", "as": "is_up"},
+        {
+          "aggregate": [
+            {"op": "count", "as": "sites"},
+            {"op": "sum", "field": "is_down", "as": "down"},
+            {"op": "sum", "field": "is_up", "as": "up"},
+            {"op": "distinct", "field": "CommonName", "as": "n_species"}
+          ],
+          "groupby": ["Region", "State", "RegionCentroidLatitude", "RegionCentroidLongitude"]
+        },
+        {"calculate": "(datum.down + datum.up) > 0 ? datum.down / (datum.down + datum.up) : 0.5", "as": "share_down"},
+        {
+          "calculate": "datum.share_down > 0.6 ? 'Mostly falling' : datum.share_down < 0.4 ? 'Mostly rising' : 'Mixed'",
+          "as": "outlook"
+        }
+      ],
+      "params": [
+        {"name": "pick", "select": {"type": "point", "fields": ["outlook"]}, "bind": "legend"}
+      ],
+      "mark": {"type": "circle", "stroke": "#ffffff", "strokeWidth": 1},
+      "encoding": {
+        "longitude": {"field": "RegionCentroidLongitude", "type": "quantitative"},
+        "latitude": {"field": "RegionCentroidLatitude", "type": "quantitative"},
+        "size": {
+          "field": "sites", "type": "quantitative", "title": "Sites monitored",
+          "scale": {"type": "sqrt", "range": [30, 1400]},
+          "legend": {"values": [5, 25, 100], "orient": "bottom-left", "symbolType": "circle", "symbolFillColor": "#bdb9aa", "symbolStrokeColor": "#ffffff"}
+        },
+        "color": {
+          "field": "outlook", "type": "nominal", "title": "Frog numbers at most sites",
+          "scale": {"domain": ["Mostly falling", "Mixed", "Mostly rising"], "range": ["#c0392b", "#a39f90", "#2a78b5"]},
+          "legend": {"orient": "top-left", "direction": "horizontal"}
+        },
+        "opacity": {"condition": {"param": "pick", "value": 0.85}, "value": 0.12},
+        "order": {"field": "sites", "sort": "descending"},
+        "tooltip": [
+          {"field": "Region", "title": "Region"},
+          {"field": "State"},
+          {"field": "sites", "title": "Sites monitored", "type": "quantitative"},
+          {"field": "n_species", "title": "Threatened species", "type": "quantitative"},
+          {"field": "down", "title": "Sites where numbers fell", "type": "quantitative"},
+          {"field": "up", "title": "Sites where numbers rose", "type": "quantitative"}
+        ]
+      }
+    }
+  ]
+}

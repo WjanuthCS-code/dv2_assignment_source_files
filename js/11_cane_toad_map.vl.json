@@ -1,0 +1,57 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Dot distribution map of FrogID Cane Toad recordings, filtered with a year slider.",
+  "title": {
+    "text": "Where Cane Toads are being heard",
+    "subtitle": "Each dot is one FrogID recording of a Cane Toad. Drag the slider to add recordings year by year; the chosen year is shown darker."
+  },
+  "width": "container",
+  "height": 470,
+  "params": [
+    {
+      "name": "year_pick",
+      "value": 2024,
+      "bind": {"input": "range", "min": 2017, "max": 2024, "step": 1, "name": "Show recordings up to: "}
+    }
+  ],
+  "projection": {"type": "conicEqualArea", "parallels": [-18, -36], "rotate": [-133, 0]},
+  "layer": [
+    {
+      "data": {"url": "data/australia_states.topojson", "format": {"type": "topojson", "feature": "states"}},
+      "mark": {"type": "geoshape", "fill": "#e2dfd2", "stroke": "#ffffff", "strokeWidth": 1}
+    },
+    {
+      "data": {"url": "data/frogid_featured_records.csv"},
+      "transform": [
+        {"filter": "datum.Species == 'Rhinella marina'"},
+        {"filter": "datum.Year <= year_pick"}
+      ],
+      "mark": {"type": "circle", "size": 10},
+      "encoding": {
+        "longitude": {"field": "Decimal longitude (WGS84)", "type": "quantitative"},
+        "latitude": {"field": "Decimal latitude (WGS84)", "type": "quantitative"},
+        "color": {"condition": {"test": "datum.Year == year_pick", "value": "#7a3b12"}, "value": "#b9a77e"},
+        "opacity": {"condition": {"test": "datum.Year == year_pick", "value": 0.75}, "value": 0.35},
+        "order": {"field": "Year", "type": "quantitative"},
+        "tooltip": [
+          {"field": "Event Date", "title": "Date", "type": "temporal", "format": "%d %b %Y"},
+          {"field": "State - parsed", "title": "State"}
+        ]
+      }
+    },
+    {
+      "data": {"url": "data/frogid_featured_records.csv"},
+      "transform": [
+        {"filter": "datum.Species == 'Rhinella marina' && datum.Year <= year_pick"},
+        {"aggregate": [{"op": "count", "as": "n"}]},
+        {"calculate": "format(datum.n, ',') + ' recordings, 2017–' + year_pick", "as": "label"}
+      ],
+      "mark": {"type": "text", "align": "left", "fontSize": 16, "fontWeight": 700, "color": "#7a3b12", "font": "Fraunces, Georgia, serif"},
+      "encoding": {
+        "longitude": {"datum": 109.5},
+        "latitude": {"datum": -41.5},
+        "text": {"field": "label"}
+      }
+    }
+  ]
+}

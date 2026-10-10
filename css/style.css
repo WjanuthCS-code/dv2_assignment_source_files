@@ -1,0 +1,111 @@
+/* ===== The Fading Chorus — page styles ===== */
+:root {
+  --paper: #f6f4ec;
+  --paper-alt: #eceadf;
+  --ink: #1e2b23;
+  --ink-2: #3d4a41;
+  --muted: #5c6b61;
+  --frog: #2f6b3a;
+  --frog-dark: #1d4527;
+  --alarm: #b2182b;
+  --rule: #d8d4c4;
+  --measure: 68ch;
+}
+
+html { font-size: 17px; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink-2);
+  font-family: "Source Sans 3", Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+}
+.pure-g [class*="pure-u"] { font-family: inherit; }
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+.wrap.narrow { max-width: 720px; }
+
+h1, h2, h3, h4 { font-family: "Fraunces", Georgia, serif; color: var(--ink); line-height: 1.15; }
+h1 { font-size: clamp(2.6rem, 6vw, 4.2rem); font-weight: 800; margin: 0.1em 0 0.3em; letter-spacing: -0.01em; }
+h2 { font-size: 2rem; font-weight: 600; margin: 0 0 0.5em; }
+h3 { font-size: 1.4rem; margin-top: 0; }
+h4 { font-size: 1.05rem; margin: 1.2em 0 0.3em; }
+p { max-width: var(--measure); }
+a { color: var(--frog); }
+
+/* ----- Hero ----- */
+.hero {
+  background: var(--frog-dark);
+  color: #e9efe6;
+  padding: 72px 0 56px;
+}
+.hero h1 { color: #ffffff; }
+.kicker { text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; font-weight: 700; color: #a9c9a4; margin: 0; }
+.lede { font-size: 1.2rem; line-height: 1.55; color: #e1e9de; }
+.byline { font-size: 0.95rem; color: #b8cbb4; margin-top: 1.4em; }
+
+.stats { margin-top: 36px; }
+.stat {
+  border-top: 2px solid #6f9b6b;
+  padding: 12px 16px 0 0;
+  margin-bottom: 20px;
+}
+.stat .num { display: block; font-family: "Fraunces", Georgia, serif; font-size: 2.3rem; font-weight: 800; color: #ffffff; line-height: 1.1; }
+.stat .lbl { display: block; font-size: 0.9rem; color: #c3d4bf; line-height: 1.35; margin-top: 4px; }
+.stat.alarm { border-top-color: #e87a6c; }
+.stat.alarm .num { color: #ffb3a6; }
+
+/* ----- Sections ----- */
+section { padding: 72px 0; border-bottom: 1px solid var(--rule); }
+section.alt { background: var(--paper-alt); }
+.section-num { font-family: "Fraunces", Georgia, serif; font-size: 0.95rem; font-weight: 600; color: var(--frog); margin: 0; letter-spacing: 0.1em; }
+.intro { font-size: 1.08rem; margin-bottom: 28px; }
+.note { font-size: 0.92rem; color: var(--muted); border-left: 3px solid var(--frog); padding-left: 12px; margin-top: 16px; }
+
+/* ----- Side notes next to charts ----- */
+.aside { border-left: 3px solid var(--frog); padding: 8px 0 8px 18px; margin-top: 56px; }
+.aside h3 { font-size: 1.15rem; margin-bottom: 0.4em; }
+.aside p { font-size: 0.95rem; }
+
+/* ----- Chart containers ----- */
+.vis { width: 100%; margin: 12px 0 24px; min-height: 120px; }
+.vis-wide { margin-bottom: 36px; }
+.vis .vega-embed { width: 100%; }
+.vis .vega-embed summary { display: none; }         /* hide the "..." actions menu */
+.gutter > [class*="pure-u"] { box-sizing: border-box; padding-right: 32px; }
+.gutter > [class*="pure-u"]:last-child { padding-right: 0; }
+
+.placeholder {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 260px;
+  border: 2px dashed var(--rule);
+  border-radius: 6px;
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* Vega-bound inputs (radio buttons, dropdowns, sliders) */
+.vega-bindings { font-size: 0.92rem; margin-top: 6px; }
+.vega-bind { display: inline-block; margin-right: 18px; }
+.vega-bind-name { font-weight: 600; color: var(--ink-2); margin-right: 6px; }
+.vega-bind label { margin-right: 10px; }
+
+/* Tooltip */
+#vg-tooltip-element { font-family: "Source Sans 3", Helvetica, Arial, sans-serif; font-size: 13px; border-radius: 4px; }
+
+/* ----- Footer ----- */
+footer { background: #24302a; color: #c9d3c6; padding: 56px 0 64px; font-size: 0.92rem; }
+footer h3, footer h4 { color: #ffffff; }
+footer a { color: #a9d29f; }
+.sources { padding-left: 18px; }
+.sources li { margin-bottom: 10px; }
+
+@media (max-width: 767px) {
+  html { font-size: 16px; }
+  .gutter > [class*="pure-u"] { padding-right: 0; }
+  section { padding: 48px 0; }
+  .wrap { padding: 0 16px; }
+}

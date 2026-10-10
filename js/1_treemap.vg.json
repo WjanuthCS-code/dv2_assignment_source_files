@@ -1,0 +1,182 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Treemap of frog species recorded by FrogID, grouped by family. Box size = 1 per species or number of recordings; colour = EPBC threatened status.",
+  "height": 460,
+  "padding": {"top": 4, "left": 0, "right": 0, "bottom": 4},
+  "autosize": {"type": "pad", "resize": true},
+
+  "title": {
+    "text": "Who's who in the frog chorus",
+    "subtitle": "215 species recorded by FrogID, grouped by family. Hover a box for details."
+  },
+
+  "signals": [
+    {
+      "name": "width",
+      "init": "containerSize()[0] > 0 ? containerSize()[0] : 1000",
+      "on": [{"events": "window:resize", "update": "containerSize()[0] > 0 ? containerSize()[0] : width"}]
+    },
+    {
+      "name": "sizeBy",
+      "value": "Number of species",
+      "bind": {
+        "input": "radio",
+        "options": ["Number of species", "Number of recordings"],
+        "name": "Box size shows: "
+      }
+    }
+  ],
+
+  "data": [
+    {
+      "name": "epbc",
+      "url": "data/epbc_threatened_species_2026-08-28.csv",
+      "format": {"type": "csv"},
+      "transform": [
+        {"type": "filter", "expr": "datum.Class === 'Amphibia'"}
+      ]
+    },
+    {
+      "name": "species",
+      "url": "data/frogid_species_counts.csv",
+      "format": {"type": "csv", "parse": {"Number of records": "number"}},
+      "transform": [
+        {
+          "type": "lookup",
+          "from": "epbc",
+          "key": "Scientific Name",
+          "fields": ["Species Name"],
+          "values": ["Threatened status"],
+          "as": ["status"]
+        },
+        {"type": "formula", "as": "status", "expr": "datum.status ? datum.status : 'Not threatened'"},
+        {"type": "formula", "as": "size", "expr": "sizeBy === 'Number of species' ? 1 : datum['Number of records']"}
+      ]
+    },
+    {
+      "name": "tree",
+      "source": "species",
+      "transform": [
+        {"type": "nest", "keys": ["Family"], "generate": true},
+        {
+          "type": "treemap",
+          "field": "size",
+          "sort": {"field": "value", "order": "descending"},
+          "round": true,
+          "method": "squarify",
+          "ratio": 1.4,
+          "size": [{"signal": "width"}, {"signal": "height"}],
+          "paddingInner": 1,
+          "paddingOuter": 0,
+          "paddingTop": 22,
+          "paddingRight": 4
+        }
+      ]
+    },
+    {
+      "name": "families",
+      "source": "tree",
+      "transform": [
+        {"type": "filter", "expr": "datum.depth === 1"},
+        {
+          "type": "formula",
+          "as": "label",
+          "expr": "datum.key === 'Pelodryadidae' ? 'Tree frogs' : datum.key === 'Myobatrachidae' ? 'Froglets & toadlets' : datum.key === 'Limnodynastidae' ? 'Marsh & burrowing frogs' : datum.key === 'Microhylidae' ? 'Nursery frogs' : datum.key === 'Bufonidae' ? 'Cane Toad' : datum.key === 'Ranidae' ? 'Wood Frog' : datum.key"
+        }
+      ]
+    },
+    {
+      "name": "leaves",
+      "source": "tree",
+      "transform": [{"type": "filter", "expr": "!datum.children"}]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": ["Not threatened", "Vulnerable", "Endangered", "Critically Endangered"],
+      "range": ["#dfe5d8", "#eba92a", "#d9582a", "#a50f15"]
+    }
+  ],
+
+  "legends": [
+    {
+      "fill": "color",
+      "title": "National threat status (EPBC Act)",
+      "orient": "top",
+      "direction": "horizontal",
+      "symbolType": "square",
+      "symbolSize": 140,
+      "columnPadding": 16,
+      "offset": 8
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "rect",
+      "from": {"data": "families"},
+      "encode": {
+        "update": {
+          "x": {"field": "x0"}, "y": {"field": "y0"},
+          "x2": {"field": "x1"}, "y2": {"field": "y1"},
+          "fill": {"value": "#2f6b3a"},
+          "fillOpacity": {"value": 0.12}
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {"data": "families"},
+      "encode": {
+        "update": {
+          "x": {"signal": "datum.x0 + 6"},
+          "y": {"signal": "datum.y0 + 15"},
+          "text": {"signal": "(datum.x1 - datum.x0) > 110 ? datum.label + ' · ' + datum.values.length + ' species' : (datum.x1 - datum.x0) > 40 ? datum.label : ''"},
+          "font": {"value": "Fraunces, Georgia, serif"},
+          "fontSize": {"value": 13},
+          "fontWeight": {"value": 600},
+          "fill": {"value": "#1e2b23"},
+          "limit": {"signal": "datum.x1 - datum.x0 - 8"}
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "name": "speciesRect",
+      "from": {"data": "leaves"},
+      "encode": {
+        "enter": {
+          "stroke": {"value": "#f6f4ec"},
+          "strokeWidth": {"value": 1}
+        },
+        "update": {
+          "x": {"field": "x0"}, "y": {"field": "y0"},
+          "x2": {"field": "x1"}, "y2": {"field": "y1"},
+          "fill": {"scale": "color", "field": "status"},
+          "tooltip": {
+            "signal": "{'title': datum['Vernacular Name'], 'Scientific name': datum['Species Name'], 'Family': datum.Family, 'FrogID recordings': format(datum['Number of records'], ','), 'Threat status': datum.status}"
+          }
+        },
+        "hover": {"fill": {"value": "#2f6b3a"}}
+      }
+    },
+    {
+      "type": "text",
+      "from": {"data": "leaves"},
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {"signal": "datum.x0 + 4"},
+          "y": {"signal": "datum.y0 + 13"},
+          "text": {"signal": "(datum.x1 - datum.x0) > 70 && (datum.y1 - datum.y0) > 18 ? datum['Vernacular Name'] : ''"},
+          "limit": {"signal": "datum.x1 - datum.x0 - 6"},
+          "fontSize": {"value": 11},
+          "fill": {"signal": "datum.status === 'Critically Endangered' || datum.status === 'Endangered' ? '#ffffff' : '#1e2b23'"}
+        }
+      }
+    }
+  ]
+}

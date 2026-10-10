@@ -1,0 +1,46 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Waffle (unit) chart: each square is one nationally listed frog species, coloured by EPBC status.",
+  "title": {
+    "text": "53 frogs on the national threatened list",
+    "subtitle": "Each square is one species. Four are already extinct."
+  },
+  "data": {"url": "data/epbc_threatened_species_2026-08-28.csv"},
+  "transform": [
+    {"filter": "datum.Class == 'Amphibia'"},
+    {
+      "calculate": "indexof(['Extinct', 'Critically Endangered', 'Endangered', 'Vulnerable'], datum['Threatened status'])",
+      "as": "severity"
+    },
+    {"joinaggregate": [{"op": "count", "as": "n_status"}], "groupby": ["Threatened status"]},
+    {"calculate": "datum['Threatened status'] + ' (' + datum.n_status + ')'", "as": "status_label"},
+    {
+      "window": [{"op": "row_number", "as": "id"}],
+      "sort": [{"field": "severity", "order": "ascending"}, {"field": "Common Name", "order": "ascending"}]
+    },
+    {"calculate": "(datum.id - 1) % 9", "as": "col"},
+    {"calculate": "floor((datum.id - 1) / 9)", "as": "row"},
+    {"calculate": "split(datum['Common Name'], ',')[0]", "as": "name"}
+  ],
+  "width": 330,
+  "height": 222,
+  "mark": {"type": "rect", "cornerRadius": 3, "stroke": "#eceadf", "strokeWidth": 3},
+  "encoding": {
+    "x": {"field": "col", "type": "ordinal", "axis": null},
+    "y": {"field": "row", "type": "ordinal", "axis": null},
+    "color": {
+      "field": "status_label",
+      "type": "nominal",
+      "title": null,
+      "sort": {"field": "severity", "op": "min"},
+      "scale": {"range": ["#2d2424", "#a50f15", "#d9582a", "#eba92a"]},
+      "legend": {"orient": "bottom", "direction": "horizontal", "columns": 2, "symbolSize": 160, "labelFontSize": 13, "columnPadding": 18}
+    },
+    "tooltip": [
+      {"field": "name", "type": "nominal", "title": "Species"},
+      {"field": "Scientific Name", "type": "nominal", "title": "Scientific name"},
+      {"field": "Threatened status", "type": "nominal", "title": "Status"},
+      {"field": "Family", "type": "nominal"}
+    ]
+  }
+}

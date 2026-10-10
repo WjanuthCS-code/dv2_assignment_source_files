@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://www.ala.org.au/commonui-bs3-2019/css/ala-styles.css" rel="stylesheet"
+          media="screen,print"/>
+    <!--<title>Title</title>-->
+    <style>
+        /* The only override we need from ala-styles.css */
+
+        body {
+            padding-top: 0px;
+        }
+
+        /* DOI - taken from GBIF */
+        .doi {
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 4px 6px;
+            white-space:nowrap;
+            white-space:nowrap;
+        }
+        .doi-sm {
+            font-size: 13px;
+            padding: 2px 0;
+        }
+        .doi span:first-of-type {
+            -webkit-transition: all .3s ease;
+            transition: all .3s ease;
+            background: #D5502A ;
+            /*#09c;*/
+            padding: 4px 6px;
+            /*border-radius: 5px 0 0 5px;*/
+            color: #fff;
+            border-right-width: 0;
+            border-color:#D5502A;
+            /*#09c;*/
+        }
+        .doi span:last-of-type {
+            color: #333;
+            background: #fff;
+            text-decoration: none;
+            padding: 4px 6px;
+            /*border-radius: 0 5px 5px 0;*/
+            border-left-width: 0;
+        }
+        .doi span {
+            border: 1px solid #adadad;
+        }
+        .doi:hover span:first-of-type {
+            background: #D5502A;
+            /*#004d66; */
+            border-color: #D5502A;
+            /*#004d66;*/
+        }
+        .doi:hover span:last-of-type {
+            background: #f9f9f9;
+        }
+
+    </style>
+</head>
+<body>
+When using this dataset please use the following citation:<br><br>
+<cite>Atlas of Living Australia occurrence download at <a href='https://biocache.ala.org.au/occurrences/search?&q=*%3A*&fq=data_resource_uid%3Adr14760&fq=species%3A%28%22Litoria+aurea%22+OR+%22Litoria+raniformis%22+OR+%22Mixophyes+iteratus%22+OR+%22Mixophyes+fleayi%22+OR+%22Litoria+rheocola%22+OR+%22Litoria+chloris%22+OR+%22Rhinella+marina%22+OR+%22Pseudophryne+australis%22%29&disableAllQualityFilters=true&fq=-basisOfRecord%3A%22FOSSIL_SPECIMEN%22+AND+-%28basisOfRecord%3A%22MATERIAL_SAMPLE%22+AND+contentTypes%3A%22Environmental+DNA%22%29&fq=-%28duplicate_status%3A%22ASSOCIATED%22+AND+duplicateType%3A%22DIFFERENT_DATASET%22%29&fq=-degreeOfEstablishment%3A%22cultivated%22+AND+-degreeOfEstablishment%3A%22captive%22&fq=-assertions%3ATAXON_MATCH_NONE+AND+-assertions%3AINVALID_SCIENTIFIC_NAME+AND+-assertions%3AUNKNOWN_KINGDOM+AND+-assertions%3ATAXON_SCOPE_MISMATCH+AND+-assertions%3ATAXON_HOMONYM&fq=-occurrenceStatus%3AABSENT&fq=-identificationVerificationStatus%3A%22needs_id%22+AND+-identificationVerificationStatus%3A%22verification+required%22&fq=-year%3A%5B*+TO+1700%5D&fq=-userAssertions%3A50001+AND+-userAssertions%3A50005&fq=-decimalLatitude%3A0+AND+-decimalLongitude%3A0+AND+-assertions%3A%22PRESUMED_SWAPPED_COORDINATE%22+AND+-assertions%3A%22COORDINATES_CENTRE_OF_STATEPROVINCE%22+AND+-assertions%3A%22COORDINATES_CENTRE_OF_COUNTRY%22+AND+-assertions%3A%22PRESUMED_NEGATED_LATITUDE%22+AND+-assertions%3A%22PRESUMED_NEGATED_LONGITUDE%22&fq=-spatiallyValid%3A%22false%22&fq=-outlierLayerCount%3A%5B3+TO+*%5D&fq=-coordinateUncertaintyInMeters%3A%5B10001+TO+*%5D&qc=-_nest_parent_%3A*'>https://biocache.ala.org.au/occurrences/search?&q=*%3A*&fq=data_resource_uid%3Adr14760&fq=species%3A%28%22Litoria+aurea%22+OR+%22Litoria+raniformis%22+OR+%22Mixophyes+iteratus%22+OR+%22Mixophyes+fleayi%22+OR+%22Litoria+rheocola%22+OR+%22Litoria+chloris%22+OR+%22Rhinella+marina%22+OR+%22Pseudophryne+australis%22%29&disableAllQualityFilters=true&fq=-basisOfRecord%3A%22FOSSIL_SPECIMEN%22+AND+-%28basisOfRecord%3A%22MATERIAL_SAMPLE%22+AND+contentTypes%3A%22Environmental+DNA%22%29&fq=-%28duplicate_status%3A%22ASSOCIATED%22+AND+duplicateType%3A%22DIFFERENT_DATASET%22%29&fq=-degreeOfEstablishment%3A%22cultivated%22+AND+-degreeOfEstablishment%3A%22captive%22&fq=-assertions%3ATAXON_MATCH_NONE+AND+-assertions%3AINVALID_SCIENTIFIC_NAME+AND+-assertions%3AUNKNOWN_KINGDOM+AND+-assertions%3ATAXON_SCOPE_MISMATCH+AND+-assertions%3ATAXON_HOMONYM&fq=-occurrenceStatus%3AABSENT&fq=-identificationVerificationStatus%3A%22needs_id%22+AND+-identificationVerificationStatus%3A%22verification+required%22&fq=-year%3A%5B*+TO+1700%5D&fq=-userAssertions%3A50001+AND+-userAssertions%3A50005&fq=-decimalLatitude%3A0+AND+-decimalLongitude%3A0+AND+-assertions%3A%22PRESUMED_SWAPPED_COORDINATE%22+AND+-assertions%3A%22COORDINATES_CENTRE_OF_STATEPROVINCE%22+AND+-assertions%3A%22COORDINATES_CENTRE_OF_COUNTRY%22+AND+-assertions%3A%22PRESUMED_NEGATED_LATITUDE%22+AND+-assertions%3A%22PRESUMED_NEGATED_LONGITUDE%22&fq=-spatiallyValid%3A%22false%22&fq=-outlierLayerCount%3A%5B3+TO+*%5D&fq=-coordinateUncertaintyInMeters%3A%5B10001+TO+*%5D&qc=-_nest_parent_%3A*</a> accessed on 11 October 2026 at 6:24:11 AM.</cite> <br><br>
+The DOI for this download is available at <a href='https://doi.org/10.26197/ala.7c8996cd-871e-470b-b02b-cd4b29922351'>https://doi.org/10.26197/ala.7c8996cd-871e-470b-b02b-cd4b29922351</a><br><br>
+Data contributed by the following providers:<br>
+<ul><li>Records provided by FrogID, accessed through ALA website. (Creative Commons Attribution-Noncommercial (International) (CC-BY-NC 4.0 (Int))). For more information: https://collections.ala.org.au/public/show/dr14760</li></ul><br>
+More information can be found at <a href="https://support.ala.org.au/support/solutions/articles/6000261662-citing-the-ala">citing the ALA</a>.<br><br>
+</body>
+</html>
+For more information about the fields that are being downloaded please consult <a href='headings.csv'>Download Fields</a>.

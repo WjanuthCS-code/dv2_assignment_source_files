@@ -1,0 +1,220 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Radial (polar area) chart of FrogID calls by month for a selected species. Each wedge is a month; wedge length = share of that species' calls recorded in the month.",
+  "title": {
+    "text": "A year of frog calls",
+    "subtitle": "Share of each species' recordings made in each month"
+  },
+  "width": 330,
+  "height": 330,
+  "params": [
+    {
+      "name": "species_pick",
+      "value": "Red-eyed Tree Frog",
+      "bind": {
+        "input": "select",
+        "options": [
+          "Red-eyed Tree Frog",
+          "Red-crowned Toadlet",
+          "Southern Bell Frog",
+          "Giant Barred Frog",
+          "Green and Golden Bell Frog",
+          "Common Mist Frog",
+          "Fleay's Barred Frog",
+          "Cane Toad"
+        ],
+        "name": "Species: "
+      }
+    }
+  ],
+  "data": {
+    "url": "data/frogid_featured_records.csv"
+  },
+  "transform": [
+    {
+      "calculate": "{'Litoria aurea': 'Green and Golden Bell Frog', 'Litoria raniformis': 'Southern Bell Frog', 'Mixophyes iteratus': 'Giant Barred Frog', 'Mixophyes fleayi': 'Fleay\\'s Barred Frog', 'Litoria rheocola': 'Common Mist Frog', 'Litoria chloris': 'Red-eyed Tree Frog', 'Rhinella marina': 'Cane Toad', 'Pseudophryne australis': 'Red-crowned Toadlet'}[datum.Species]",
+      "as": "name"
+    },
+    {
+      "filter": "datum.name == species_pick"
+    },
+    {
+      "aggregate": [
+        {
+          "op": "count",
+          "as": "calls"
+        }
+      ],
+      "groupby": [
+        "Month"
+      ]
+    },
+    {
+      "impute": "calls",
+      "key": "Month",
+      "keyvals": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "value": 0
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "sum",
+          "field": "calls",
+          "as": "total"
+        }
+      ]
+    },
+    {
+      "calculate": "datum.calls / datum.total",
+      "as": "share"
+    },
+    {
+      "calculate": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.Month - 1]",
+      "as": "month_name"
+    },
+    {
+      "calculate": "datum.Month >= 3 && datum.Month <= 5 ? 'Autumn' : datum.Month >= 6 && datum.Month <= 8 ? 'Winter' : datum.Month >= 9 && datum.Month <= 11 ? 'Spring' : 'Summer'",
+      "as": "season"
+    },
+    {
+      "calculate": "datum.Month - 1",
+      "as": "angle_start"
+    },
+    {
+      "calculate": "datum.Month",
+      "as": "angle_end"
+    },
+    {
+      "calculate": "datum.Month - 0.5",
+      "as": "angle_mid"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "arc",
+        "innerRadius": 22,
+        "stroke": "#eceadf",
+        "strokeWidth": 2,
+        "padAngle": 0.02,
+        "cornerRadius": 2
+      },
+      "encoding": {
+        "radius": {
+          "field": "share",
+          "type": "quantitative",
+          "scale": {
+            "type": "sqrt",
+            "zero": true,
+            "domain": [
+              0,
+              0.35
+            ],
+            "range": [
+              22,
+              150
+            ]
+          }
+        },
+        "color": {
+          "field": "season",
+          "type": "nominal",
+          "title": "Season",
+          "scale": {
+            "domain": [
+              "Summer",
+              "Autumn",
+              "Winter",
+              "Spring"
+            ],
+            "range": [
+              "#d9822b",
+              "#9c6b3c",
+              "#5b7f9e",
+              "#4f9a5a"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "month_name",
+            "title": "Month"
+          },
+          {
+            "field": "calls",
+            "title": "Recordings",
+            "type": "quantitative",
+            "format": ","
+          },
+          {
+            "field": "share",
+            "title": "Share of the year",
+            "type": "quantitative",
+            "format": ".0%"
+          }
+        ],
+        "theta": {
+          "field": "angle_start",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              12
+            ],
+            "range": [
+              0,
+              6.2832
+            ]
+          }
+        },
+        "theta2": {
+          "field": "angle_end"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "radius": 164,
+        "fontSize": 11,
+        "color": "#5c6b61"
+      },
+      "encoding": {
+        "text": {
+          "field": "month_name"
+        },
+        "theta": {
+          "field": "angle_mid",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              12
+            ],
+            "range": [
+              0,
+              6.2832
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

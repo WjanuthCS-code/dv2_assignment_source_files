@@ -1,0 +1,104 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Threatened Frog Index 1985-2022 (TSX). Line = average abundance relative to 1985; band = 95% credible interval.",
+  "title": {
+    "text": "Threatened frogs have lost almost all of their numbers since 1985",
+    "subtitle": "Average abundance of 28 threatened frog species, compared with 1985 (= 100). The shaded band shows the range the true value is likely to fall in."
+  },
+  "width": "container",
+  "height": 330,
+  "data": {"url": "data/tsx_frog_trend.csv"},
+  "transform": [
+    {"calculate": "datum.value * 100", "as": "index"},
+    {"calculate": "datum.low * 100", "as": "index_low"},
+    {"calculate": "datum.high * 100", "as": "index_high"},
+    {"calculate": "100 - datum.value * 100", "as": "pct_lost"}
+  ],
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "quantitative",
+      "title": null,
+      "scale": {"domain": [1985, 2022], "nice": false},
+      "axis": {"format": "d", "tickCount": 8, "grid": false, "labelPadding": 6}
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "area", "color": "#2f6b3a", "opacity": 0.14},
+      "encoding": {
+        "y": {"field": "index_low", "type": "quantitative"},
+        "y2": {"field": "index_high"}
+      }
+    },
+    {
+      "mark": {"type": "line", "color": "#1d4527", "strokeWidth": 2.5, "interpolate": "monotone"},
+      "encoding": {
+        "y": {
+          "field": "index",
+          "type": "quantitative",
+          "title": "Abundance (1985 = 100)",
+          "scale": {"domain": [0, 100]},
+          "axis": {"tickCount": 5}
+        }
+      }
+    },
+    {
+      "description": "Annotation: chytrid identified",
+      "data": {"values": [{"year": 1998, "label": "1998: scientists identify chytrid fungus", "label2": "as a killer of Australian frogs"}]},
+      "layer": [
+        {"mark": {"type": "rule", "color": "#a50f15", "strokeDash": [4, 3], "strokeWidth": 1.2}},
+        {
+          "mark": {"type": "text", "align": "left", "dx": 6, "dy": -10, "color": "#a50f15", "fontWeight": 600, "fontSize": 12},
+          "encoding": {"text": {"field": "label"}, "y": {"datum": 62}}
+        },
+        {
+          "mark": {"type": "text", "align": "left", "dx": 6, "dy": 5, "color": "#a50f15", "fontSize": 12},
+          "encoding": {"text": {"field": "label2"}, "y": {"datum": 62}}
+        }
+      ]
+    },
+    {
+      "description": "Direct labels on start, 1991 and end points",
+      "transform": [{"filter": "datum.year == 1985 || datum.year == 1991 || datum.year == 2022"}],
+      "layer": [
+        {
+          "mark": {"type": "point", "filled": true, "size": 60, "color": "#1d4527"},
+          "encoding": {"y": {"field": "index", "type": "quantitative"}}
+        },
+        {
+          "transform": [{"filter": "datum.year == 1985"}],
+          "mark": {"type": "text", "align": "left", "dx": 6, "dy": -12, "fontWeight": 700, "fontSize": 13, "color": "#1e2b23", "text": "1985: 100"},
+          "encoding": {"y": {"field": "index", "type": "quantitative"}}
+        },
+        {
+          "transform": [{"filter": "datum.year == 1991"}],
+          "mark": {"type": "text", "align": "left", "dx": 8, "dy": -4, "fontWeight": 700, "fontSize": 13, "color": "#1e2b23", "text": "1991: down 79%"},
+          "encoding": {"y": {"field": "index", "type": "quantitative"}}
+        },
+        {
+          "transform": [{"filter": "datum.year == 2022"}],
+          "mark": {"type": "text", "align": "right", "dy": -14, "fontWeight": 700, "fontSize": 13, "color": "#1e2b23", "text": "2022: just 3 left for every 100 in 1985"},
+          "encoding": {"y": {"field": "index", "type": "quantitative"}}
+        }
+      ]
+    },
+    {
+      "description": "Hover: vertical rule and tooltip for the nearest year",
+      "params": [
+        {"name": "hover", "select": {"type": "point", "encodings": ["x"], "nearest": true, "on": "pointerover", "clear": "pointerout"}}
+      ],
+      "mark": {"type": "rule", "color": "#5c6b61", "strokeWidth": 1},
+      "encoding": {
+        "opacity": {"condition": {"param": "hover", "empty": false, "value": 0.6}, "value": 0},
+        "tooltip": [
+          {"field": "year", "type": "quantitative", "title": "Year", "format": "d"},
+          {"field": "index", "type": "quantitative", "title": "Index (1985 = 100)", "format": ".1f"},
+          {"field": "pct_lost", "type": "quantitative", "title": "% lost since 1985", "format": ".0f"},
+          {"field": "index_low", "type": "quantitative", "title": "Likely range: low", "format": ".1f"},
+          {"field": "index_high", "type": "quantitative", "title": "Likely range: high", "format": ".1f"}
+        ]
+      }
+    }
+  ]
+}
