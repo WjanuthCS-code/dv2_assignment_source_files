@@ -3,7 +3,7 @@
   "description": "Dot distribution map of FrogID Cane Toad recordings, filtered with a year slider.",
   "title": {
     "text": "Where Cane Toads are being heard",
-    "subtitle": "Each dot is one FrogID recording of a Cane Toad. Drag the slider to add recordings year by year; the chosen year is shown darker."
+    "subtitle": "Each dot is one FrogID recording. Drag the slider to step through the years (chosen year in dark brown)."
   },
   "width": "container",
   "height": 470,

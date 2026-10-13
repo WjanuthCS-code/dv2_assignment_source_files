@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Fading Chorus: Australia's Frogs</title>
   <meta name="description" content="A data story about Australian frogs: which species are declining, which are recovering, and when they breed.">
-  <meta name="author" content="[Your Name]">
+  <meta name="author" content="Walahewage Januth Sumathiratne">
 
   <!-- Fonts: Fraunces (headings) + Source Sans 3 (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +32,7 @@
       <p class="lede">Australia is home to more than 240 kinds of frog, and almost all of them live nowhere else on Earth.
         Since the 1980s, many have quietly disappeared from the creeks and swamps where they once called.
         This page follows the data: who is declining, who is bouncing back, and when frogs sing.</p>
-      <p class="byline">By <strong>[Your Name]</strong> · FIT3179 Data Visualisation 2 · October 2026</p>
+      <p class="byline">By <strong>Walahewage Januth Sumathiratne</strong> · FIT3179 Data Visualisation 2 · October 2026</p>
 
       <div class="pure-g stats">
         <div class="pure-u-1-2 pure-u-md-1-4"><div class="stat"><span class="num">1.18M</span><span class="lbl">frog calls recorded by citizen scientists with FrogID (2017–2024)</span></div></div>
@@ -54,7 +54,8 @@
           Each box below is one species: switch between counting <em>species</em> and counting <em>recordings</em> to see how a few common frogs dominate what people hear,
           while threatened species (coloured) are rarely heard at all.</p>
         <div id="vis_treemap" class="vis vis-wide"></div>
-        <p class="note">Only 24 of the 53 nationally threatened frogs appear in FrogID's public records. The others are extinct, too rare to be recorded,
+        <p class="note">Switch to <em>Number of recordings</em>: the most-heard threatened frog is the Endangered Sloane's Froglet (2,777 recordings),
+          while many threatened species have fewer than 100. Only 24 of the 53 nationally threatened frogs appear in FrogID's public records. The others are extinct, too rare to be recorded,
           or have their records withheld to protect them.</p>
       </div>
     </section>
@@ -133,7 +134,21 @@
         <h2>The invader</h2>
         <p class="intro">Cane Toads were released in Queensland in 1935 to control beetles in sugarcane. They are poisonous to many native animals and now
           spread across northern Australia.</p>
-        <div id="vis_toadmap" class="vis vis-wide"></div>
+        <div class="pure-g gutter">
+          <div class="pure-u-1 pure-u-md-2-3">
+            <div id="vis_toadmap" class="vis"></div>
+          </div>
+          <div class="pure-u-1 pure-u-md-1-3">
+            <div class="aside">
+              <h3>Why toads matter for frogs</h3>
+              <p>Native animals that eat Cane Toads are often poisoned, and toads compete with native frogs for food and breeding ponds.</p>
+              <p>Most recordings come from south-east Queensland, where many people live and record frogs. Dots across the Top End and the
+                Kimberley show how far the toad has spread from where it was released.</p>
+              <p class="small">More dots in a place can mean more toads, or simply more people recording, so this map shows where toads are
+                <em>heard</em>, not exactly how many there are.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -173,7 +188,7 @@
           <p>All files are used as downloaded. The only change: the FrogID record download was reduced from 59 to the 8 columns used here
             (no rows or values changed) to keep the page fast. All filtering, counting and joining happens inside the Vega-Lite specifications.</p>
           <h4>Author</h4>
-          <p>[Your Name], [Student ID] · Created October 2026 for FIT3179, Monash University.</p>
+          <p>Walahewage Januth Sumathiratne, [Student ID] · Created October 2026 for FIT3179, Monash University.</p>
           <h4>Use of AI</h4>
           <p>Generative AI (Claude, Anthropic) was used to help find data sources, draft chart code and proofread text.</p>
         </div>

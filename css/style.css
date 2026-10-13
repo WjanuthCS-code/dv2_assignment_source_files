@@ -66,6 +66,7 @@ section.alt { background: var(--paper-alt); }
 .aside { border-left: 3px solid var(--frog); padding: 8px 0 8px 18px; margin-top: 56px; }
 .aside h3 { font-size: 1.15rem; margin-bottom: 0.4em; }
 .aside p { font-size: 0.95rem; }
+.aside .small { font-size: 0.85rem; color: var(--muted); }
 
 /* ----- Chart containers ----- */
 .vis { width: 100%; margin: 12px 0 24px; min-height: 120px; }

@@ -3,159 +3,587 @@
   "description": "Small-multiple gridded maps: FrogID recordings of the seven featured native frogs, counted in 1-degree grid cells, for each season.",
   "title": {
     "text": "The chorus rises in spring and summer",
-    "subtitle": "FrogID recordings of the seven featured native frogs, counted in 1° grid cells (about 100 km across)"
+    "subtitle": "Eastern Australia. FrogID recordings of the seven featured native frogs, counted in 1° grid cells (about 100 km across)"
   },
   "hconcat": [
     {
-      "title": {"text": "Summer (Dec–Feb)", "fontSize": 14, "anchor": "middle", "subtitle": null},
-      "width": 215,
-      "height": 205,
-      "projection": {"type": "conicEqualArea", "parallels": [-18, -36], "rotate": [-133, 0]},
+      "title": {
+        "text": "Summer (Dec–Feb)",
+        "fontSize": 14,
+        "anchor": "middle",
+        "subtitle": null
+      },
+      "width": 228,
+      "height": 330,
+      "projection": {
+        "type": "conicEqualArea",
+        "parallels": [
+          -18,
+          -36
+        ],
+        "rotate": [
+          -133,
+          0
+        ],
+        "fit": {
+          "type": "MultiPoint",
+          "coordinates": [
+            [
+              139,
+              -10.5
+            ],
+            [
+              154,
+              -43.8
+            ]
+          ]
+        }
+      },
       "layer": [
         {
-          "data": {"url": "data/australia_states.topojson", "format": {"type": "topojson", "feature": "states"}},
-          "mark": {"type": "geoshape", "fill": "#e2dfd2", "stroke": "#ffffff", "strokeWidth": 0.7}
+          "data": {
+            "url": "data/australia_states.topojson",
+            "format": {
+              "type": "topojson",
+              "feature": "states"
+            }
+          },
+          "mark": {
+            "type": "geoshape",
+            "fill": "#e2dfd2",
+            "stroke": "#ffffff",
+            "strokeWidth": 0.7,
+            "clip": true
+          }
         },
         {
-          "data": {"url": "data/frogid_featured_records.csv"},
+          "data": {
+            "url": "data/frogid_featured_records.csv"
+          },
           "transform": [
-            {"filter": "datum.Species != 'Rhinella marina'"},
-            {"filter": "datum.Month == 12 || datum.Month <= 2"},
-            {"calculate": "floor(datum['Decimal latitude (WGS84)']) + 0.5", "as": "lat_cell"},
-            {"calculate": "floor(datum['Decimal longitude (WGS84)']) + 0.5", "as": "lon_cell"},
-            {"aggregate": [{"op": "count", "as": "calls"}], "groupby": ["lat_cell", "lon_cell"]}
+            {
+              "filter": "datum.Species != 'Rhinella marina'"
+            },
+            {
+              "filter": "datum.Month == 12 || datum.Month <= 2"
+            },
+            {
+              "calculate": "floor(datum['Decimal latitude (WGS84)']) + 0.5",
+              "as": "lat_cell"
+            },
+            {
+              "calculate": "floor(datum['Decimal longitude (WGS84)']) + 0.5",
+              "as": "lon_cell"
+            },
+            {
+              "aggregate": [
+                {
+                  "op": "count",
+                  "as": "calls"
+                }
+              ],
+              "groupby": [
+                "lat_cell",
+                "lon_cell"
+              ]
+            }
           ],
-          "mark": {"type": "square", "size": 34, "opacity": 0.95},
+          "mark": {
+            "type": "square",
+            "size": 150,
+            "opacity": 1,
+            "clip": true
+          },
           "encoding": {
-            "longitude": {"field": "lon_cell", "type": "quantitative"},
-            "latitude": {"field": "lat_cell", "type": "quantitative"},
+            "longitude": {
+              "field": "lon_cell",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat_cell",
+              "type": "quantitative"
+            },
             "color": {
-              "field": "calls", "type": "quantitative", "title": "Recordings per grid cell",
-              "scale": {"type": "threshold", "domain": [10, 50, 200, 500], "range": ["#cfe3c6", "#94c48c", "#4f9a5a", "#2a6b36", "#123d1f"]},
-              "legend": {"labelExpr": "datum.index == 0 ? '1–9' : datum.index == 1 ? '10–49' : datum.index == 2 ? '50–199' : datum.index == 3 ? '200–499' : '500+'"}
+              "field": "calls",
+              "type": "quantitative",
+              "title": "Recordings per grid cell",
+              "scale": {
+                "type": "threshold",
+                "domain": [
+                  10,
+                  50,
+                  200,
+                  500
+                ],
+                "range": [
+                  "#cfe3c6",
+                  "#94c48c",
+                  "#4f9a5a",
+                  "#2a6b36",
+                  "#123d1f"
+                ]
+              },
+              "legend": {
+                "labelExpr": "datum.index == 0 ? '1–9' : datum.index == 1 ? '10–49' : datum.index == 2 ? '50–199' : datum.index == 3 ? '200–499' : '500+'"
+              }
             },
             "tooltip": [
-              {"field": "calls", "title": "Recordings in this cell", "type": "quantitative", "format": ","},
-              {"field": "lat_cell", "title": "Latitude (cell centre)"},
-              {"field": "lon_cell", "title": "Longitude (cell centre)"}
+              {
+                "field": "calls",
+                "title": "Recordings in this cell",
+                "type": "quantitative",
+                "format": ","
+              },
+              {
+                "field": "lat_cell",
+                "title": "Latitude (cell centre)"
+              },
+              {
+                "field": "lon_cell",
+                "title": "Longitude (cell centre)"
+              }
             ]
           }
         }
       ]
     },
     {
-      "title": {"text": "Autumn (Mar–May)", "fontSize": 14, "anchor": "middle", "subtitle": null},
-      "width": 215,
-      "height": 205,
-      "projection": {"type": "conicEqualArea", "parallels": [-18, -36], "rotate": [-133, 0]},
+      "title": {
+        "text": "Autumn (Mar–May)",
+        "fontSize": 14,
+        "anchor": "middle",
+        "subtitle": null
+      },
+      "width": 228,
+      "height": 330,
+      "projection": {
+        "type": "conicEqualArea",
+        "parallels": [
+          -18,
+          -36
+        ],
+        "rotate": [
+          -133,
+          0
+        ],
+        "fit": {
+          "type": "MultiPoint",
+          "coordinates": [
+            [
+              139,
+              -10.5
+            ],
+            [
+              154,
+              -43.8
+            ]
+          ]
+        }
+      },
       "layer": [
         {
-          "data": {"url": "data/australia_states.topojson", "format": {"type": "topojson", "feature": "states"}},
-          "mark": {"type": "geoshape", "fill": "#e2dfd2", "stroke": "#ffffff", "strokeWidth": 0.7}
+          "data": {
+            "url": "data/australia_states.topojson",
+            "format": {
+              "type": "topojson",
+              "feature": "states"
+            }
+          },
+          "mark": {
+            "type": "geoshape",
+            "fill": "#e2dfd2",
+            "stroke": "#ffffff",
+            "strokeWidth": 0.7,
+            "clip": true
+          }
         },
         {
-          "data": {"url": "data/frogid_featured_records.csv"},
+          "data": {
+            "url": "data/frogid_featured_records.csv"
+          },
           "transform": [
-            {"filter": "datum.Species != 'Rhinella marina'"},
-            {"filter": "datum.Month >= 3 && datum.Month <= 5"},
-            {"calculate": "floor(datum['Decimal latitude (WGS84)']) + 0.5", "as": "lat_cell"},
-            {"calculate": "floor(datum['Decimal longitude (WGS84)']) + 0.5", "as": "lon_cell"},
-            {"aggregate": [{"op": "count", "as": "calls"}], "groupby": ["lat_cell", "lon_cell"]}
+            {
+              "filter": "datum.Species != 'Rhinella marina'"
+            },
+            {
+              "filter": "datum.Month >= 3 && datum.Month <= 5"
+            },
+            {
+              "calculate": "floor(datum['Decimal latitude (WGS84)']) + 0.5",
+              "as": "lat_cell"
+            },
+            {
+              "calculate": "floor(datum['Decimal longitude (WGS84)']) + 0.5",
+              "as": "lon_cell"
+            },
+            {
+              "aggregate": [
+                {
+                  "op": "count",
+                  "as": "calls"
+                }
+              ],
+              "groupby": [
+                "lat_cell",
+                "lon_cell"
+              ]
+            }
           ],
-          "mark": {"type": "square", "size": 34, "opacity": 0.95},
+          "mark": {
+            "type": "square",
+            "size": 150,
+            "opacity": 1,
+            "clip": true
+          },
           "encoding": {
-            "longitude": {"field": "lon_cell", "type": "quantitative"},
-            "latitude": {"field": "lat_cell", "type": "quantitative"},
+            "longitude": {
+              "field": "lon_cell",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat_cell",
+              "type": "quantitative"
+            },
             "color": {
-              "field": "calls", "type": "quantitative", "title": "Recordings per grid cell",
-              "scale": {"type": "threshold", "domain": [10, 50, 200, 500], "range": ["#cfe3c6", "#94c48c", "#4f9a5a", "#2a6b36", "#123d1f"]},
-              "legend": {"labelExpr": "datum.index == 0 ? '1–9' : datum.index == 1 ? '10–49' : datum.index == 2 ? '50–199' : datum.index == 3 ? '200–499' : '500+'"}
+              "field": "calls",
+              "type": "quantitative",
+              "title": "Recordings per grid cell",
+              "scale": {
+                "type": "threshold",
+                "domain": [
+                  10,
+                  50,
+                  200,
+                  500
+                ],
+                "range": [
+                  "#cfe3c6",
+                  "#94c48c",
+                  "#4f9a5a",
+                  "#2a6b36",
+                  "#123d1f"
+                ]
+              },
+              "legend": {
+                "labelExpr": "datum.index == 0 ? '1–9' : datum.index == 1 ? '10–49' : datum.index == 2 ? '50–199' : datum.index == 3 ? '200–499' : '500+'"
+              }
             },
             "tooltip": [
-              {"field": "calls", "title": "Recordings in this cell", "type": "quantitative", "format": ","},
-              {"field": "lat_cell", "title": "Latitude (cell centre)"},
-              {"field": "lon_cell", "title": "Longitude (cell centre)"}
+              {
+                "field": "calls",
+                "title": "Recordings in this cell",
+                "type": "quantitative",
+                "format": ","
+              },
+              {
+                "field": "lat_cell",
+                "title": "Latitude (cell centre)"
+              },
+              {
+                "field": "lon_cell",
+                "title": "Longitude (cell centre)"
+              }
             ]
           }
         }
       ]
     },
     {
-      "title": {"text": "Winter (Jun–Aug)", "fontSize": 14, "anchor": "middle", "subtitle": null},
-      "width": 215,
-      "height": 205,
-      "projection": {"type": "conicEqualArea", "parallels": [-18, -36], "rotate": [-133, 0]},
+      "title": {
+        "text": "Winter (Jun–Aug)",
+        "fontSize": 14,
+        "anchor": "middle",
+        "subtitle": null
+      },
+      "width": 228,
+      "height": 330,
+      "projection": {
+        "type": "conicEqualArea",
+        "parallels": [
+          -18,
+          -36
+        ],
+        "rotate": [
+          -133,
+          0
+        ],
+        "fit": {
+          "type": "MultiPoint",
+          "coordinates": [
+            [
+              139,
+              -10.5
+            ],
+            [
+              154,
+              -43.8
+            ]
+          ]
+        }
+      },
       "layer": [
         {
-          "data": {"url": "data/australia_states.topojson", "format": {"type": "topojson", "feature": "states"}},
-          "mark": {"type": "geoshape", "fill": "#e2dfd2", "stroke": "#ffffff", "strokeWidth": 0.7}
+          "data": {
+            "url": "data/australia_states.topojson",
+            "format": {
+              "type": "topojson",
+              "feature": "states"
+            }
+          },
+          "mark": {
+            "type": "geoshape",
+            "fill": "#e2dfd2",
+            "stroke": "#ffffff",
+            "strokeWidth": 0.7,
+            "clip": true
+          }
         },
         {
-          "data": {"url": "data/frogid_featured_records.csv"},
+          "data": {
+            "url": "data/frogid_featured_records.csv"
+          },
           "transform": [
-            {"filter": "datum.Species != 'Rhinella marina'"},
-            {"filter": "datum.Month >= 6 && datum.Month <= 8"},
-            {"calculate": "floor(datum['Decimal latitude (WGS84)']) + 0.5", "as": "lat_cell"},
-            {"calculate": "floor(datum['Decimal longitude (WGS84)']) + 0.5", "as": "lon_cell"},
-            {"aggregate": [{"op": "count", "as": "calls"}], "groupby": ["lat_cell", "lon_cell"]}
+            {
+              "filter": "datum.Species != 'Rhinella marina'"
+            },
+            {
+              "filter": "datum.Month >= 6 && datum.Month <= 8"
+            },
+            {
+              "calculate": "floor(datum['Decimal latitude (WGS84)']) + 0.5",
+              "as": "lat_cell"
+            },
+            {
+              "calculate": "floor(datum['Decimal longitude (WGS84)']) + 0.5",
+              "as": "lon_cell"
+            },
+            {
+              "aggregate": [
+                {
+                  "op": "count",
+                  "as": "calls"
+                }
+              ],
+              "groupby": [
+                "lat_cell",
+                "lon_cell"
+              ]
+            }
           ],
-          "mark": {"type": "square", "size": 34, "opacity": 0.95},
+          "mark": {
+            "type": "square",
+            "size": 150,
+            "opacity": 1,
+            "clip": true
+          },
           "encoding": {
-            "longitude": {"field": "lon_cell", "type": "quantitative"},
-            "latitude": {"field": "lat_cell", "type": "quantitative"},
+            "longitude": {
+              "field": "lon_cell",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat_cell",
+              "type": "quantitative"
+            },
             "color": {
-              "field": "calls", "type": "quantitative", "title": "Recordings per grid cell",
-              "scale": {"type": "threshold", "domain": [10, 50, 200, 500], "range": ["#cfe3c6", "#94c48c", "#4f9a5a", "#2a6b36", "#123d1f"]},
-              "legend": {"labelExpr": "datum.index == 0 ? '1–9' : datum.index == 1 ? '10–49' : datum.index == 2 ? '50–199' : datum.index == 3 ? '200–499' : '500+'"}
+              "field": "calls",
+              "type": "quantitative",
+              "title": "Recordings per grid cell",
+              "scale": {
+                "type": "threshold",
+                "domain": [
+                  10,
+                  50,
+                  200,
+                  500
+                ],
+                "range": [
+                  "#cfe3c6",
+                  "#94c48c",
+                  "#4f9a5a",
+                  "#2a6b36",
+                  "#123d1f"
+                ]
+              },
+              "legend": {
+                "labelExpr": "datum.index == 0 ? '1–9' : datum.index == 1 ? '10–49' : datum.index == 2 ? '50–199' : datum.index == 3 ? '200–499' : '500+'"
+              }
             },
             "tooltip": [
-              {"field": "calls", "title": "Recordings in this cell", "type": "quantitative", "format": ","},
-              {"field": "lat_cell", "title": "Latitude (cell centre)"},
-              {"field": "lon_cell", "title": "Longitude (cell centre)"}
+              {
+                "field": "calls",
+                "title": "Recordings in this cell",
+                "type": "quantitative",
+                "format": ","
+              },
+              {
+                "field": "lat_cell",
+                "title": "Latitude (cell centre)"
+              },
+              {
+                "field": "lon_cell",
+                "title": "Longitude (cell centre)"
+              }
             ]
           }
         }
       ]
     },
     {
-      "title": {"text": "Spring (Sep–Nov)", "fontSize": 14, "anchor": "middle", "subtitle": null},
-      "width": 215,
-      "height": 205,
-      "projection": {"type": "conicEqualArea", "parallels": [-18, -36], "rotate": [-133, 0]},
+      "title": {
+        "text": "Spring (Sep–Nov)",
+        "fontSize": 14,
+        "anchor": "middle",
+        "subtitle": null
+      },
+      "width": 228,
+      "height": 330,
+      "projection": {
+        "type": "conicEqualArea",
+        "parallels": [
+          -18,
+          -36
+        ],
+        "rotate": [
+          -133,
+          0
+        ],
+        "fit": {
+          "type": "MultiPoint",
+          "coordinates": [
+            [
+              139,
+              -10.5
+            ],
+            [
+              154,
+              -43.8
+            ]
+          ]
+        }
+      },
       "layer": [
         {
-          "data": {"url": "data/australia_states.topojson", "format": {"type": "topojson", "feature": "states"}},
-          "mark": {"type": "geoshape", "fill": "#e2dfd2", "stroke": "#ffffff", "strokeWidth": 0.7}
+          "data": {
+            "url": "data/australia_states.topojson",
+            "format": {
+              "type": "topojson",
+              "feature": "states"
+            }
+          },
+          "mark": {
+            "type": "geoshape",
+            "fill": "#e2dfd2",
+            "stroke": "#ffffff",
+            "strokeWidth": 0.7,
+            "clip": true
+          }
         },
         {
-          "data": {"url": "data/frogid_featured_records.csv"},
+          "data": {
+            "url": "data/frogid_featured_records.csv"
+          },
           "transform": [
-            {"filter": "datum.Species != 'Rhinella marina'"},
-            {"filter": "datum.Month >= 9 && datum.Month <= 11"},
-            {"calculate": "floor(datum['Decimal latitude (WGS84)']) + 0.5", "as": "lat_cell"},
-            {"calculate": "floor(datum['Decimal longitude (WGS84)']) + 0.5", "as": "lon_cell"},
-            {"aggregate": [{"op": "count", "as": "calls"}], "groupby": ["lat_cell", "lon_cell"]}
+            {
+              "filter": "datum.Species != 'Rhinella marina'"
+            },
+            {
+              "filter": "datum.Month >= 9 && datum.Month <= 11"
+            },
+            {
+              "calculate": "floor(datum['Decimal latitude (WGS84)']) + 0.5",
+              "as": "lat_cell"
+            },
+            {
+              "calculate": "floor(datum['Decimal longitude (WGS84)']) + 0.5",
+              "as": "lon_cell"
+            },
+            {
+              "aggregate": [
+                {
+                  "op": "count",
+                  "as": "calls"
+                }
+              ],
+              "groupby": [
+                "lat_cell",
+                "lon_cell"
+              ]
+            }
           ],
-          "mark": {"type": "square", "size": 34, "opacity": 0.95},
+          "mark": {
+            "type": "square",
+            "size": 150,
+            "opacity": 1,
+            "clip": true
+          },
           "encoding": {
-            "longitude": {"field": "lon_cell", "type": "quantitative"},
-            "latitude": {"field": "lat_cell", "type": "quantitative"},
+            "longitude": {
+              "field": "lon_cell",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat_cell",
+              "type": "quantitative"
+            },
             "color": {
-              "field": "calls", "type": "quantitative", "title": "Recordings per grid cell",
-              "scale": {"type": "threshold", "domain": [10, 50, 200, 500], "range": ["#cfe3c6", "#94c48c", "#4f9a5a", "#2a6b36", "#123d1f"]},
-              "legend": {"labelExpr": "datum.index == 0 ? '1–9' : datum.index == 1 ? '10–49' : datum.index == 2 ? '50–199' : datum.index == 3 ? '200–499' : '500+'"}
+              "field": "calls",
+              "type": "quantitative",
+              "title": "Recordings per grid cell",
+              "scale": {
+                "type": "threshold",
+                "domain": [
+                  10,
+                  50,
+                  200,
+                  500
+                ],
+                "range": [
+                  "#cfe3c6",
+                  "#94c48c",
+                  "#4f9a5a",
+                  "#2a6b36",
+                  "#123d1f"
+                ]
+              },
+              "legend": {
+                "labelExpr": "datum.index == 0 ? '1–9' : datum.index == 1 ? '10–49' : datum.index == 2 ? '50–199' : datum.index == 3 ? '200–499' : '500+'"
+              }
             },
             "tooltip": [
-              {"field": "calls", "title": "Recordings in this cell", "type": "quantitative", "format": ","},
-              {"field": "lat_cell", "title": "Latitude (cell centre)"},
-              {"field": "lon_cell", "title": "Longitude (cell centre)"}
+              {
+                "field": "calls",
+                "title": "Recordings in this cell",
+                "type": "quantitative",
+                "format": ","
+              },
+              {
+                "field": "lat_cell",
+                "title": "Latitude (cell centre)"
+              },
+              {
+                "field": "lon_cell",
+                "title": "Longitude (cell centre)"
+              }
             ]
           }
         }
       ]
     }
   ],
-  "spacing": 4,
-  "resolve": {"scale": {"color": "shared"}, "legend": {"color": "shared"}},
-  "config": {"legend": {"orient": "bottom", "direction": "horizontal"}}
+  "spacing": 10,
+  "resolve": {
+    "scale": {
+      "color": "shared"
+    },
+    "legend": {
+      "color": "shared"
+    }
+  },
+  "config": {
+    "legend": {
+      "orient": "bottom",
+      "direction": "horizontal"
+    }
+  }
 }

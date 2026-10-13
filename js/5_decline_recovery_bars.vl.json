@@ -65,7 +65,7 @@
             "color": {
               "field": "trend", "type": "nominal", "title": null,
               "scale": {"domain": ["Decreased", "Increased"], "range": ["#c0392b", "#2a78b5"]},
-              "legend": {"orient": "top", "direction": "horizontal", "labelExpr": "datum.label == 'Decreased' ? 'Fewer frogs than at first count' : 'More frogs than at first count'", "symbolType": "square", "offset": 4}
+              "legend": {"orient": "top", "direction": "horizontal", "labelExpr": "datum.label == 'Decreased' ? 'Fewer frogs than at first count' : 'More frogs than at first count'", "symbolType": "square", "offset": 22}
             },
             "tooltip": [
               {"field": "CommonName", "title": "Species"},
