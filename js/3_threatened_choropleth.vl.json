@@ -3,7 +3,7 @@
   "description": "Choropleth: number of EPBC-listed threatened or extinct frog species known or likely to occur in each state/territory.",
   "title": {
     "text": "Threatened frogs are concentrated in the east",
-    "subtitle": "Nationally listed frog species that occur in each state or territory"
+    "subtitle": ["Number of nationally listed frog species in each state or territory.", "Eastern states also have more frog species overall, so higher", "counts partly reflect richer frog life."]
   },
   "width": "container",
   "height": 400,

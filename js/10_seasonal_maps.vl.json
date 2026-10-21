@@ -68,12 +68,12 @@
               "filter": "datum.Month == 12 || datum.Month <= 2"
             },
             {
-              "calculate": "floor(datum['Decimal latitude (WGS84)']) + 0.5",
-              "as": "lat_cell"
+              "calculate": "floor(datum['Decimal longitude (WGS84)'])",
+              "as": "lon0"
             },
             {
-              "calculate": "floor(datum['Decimal longitude (WGS84)']) + 0.5",
-              "as": "lon_cell"
+              "calculate": "floor(datum['Decimal latitude (WGS84)'])",
+              "as": "lat0"
             },
             {
               "aggregate": [
@@ -83,24 +83,32 @@
                 }
               ],
               "groupby": [
-                "lat_cell",
-                "lon_cell"
+                "lon0",
+                "lat0"
               ]
+            },
+            {
+              "calculate": "datum.lon0 + 1",
+              "as": "lon1"
+            },
+            {
+              "calculate": "datum.lat0 + 1",
+              "as": "lat1"
             }
           ],
           "mark": {
-            "type": "square",
-            "size": 150,
-            "opacity": 1,
-            "clip": true
+            "type": "rect",
+            "clip": true,
+            "stroke": "#ffffff",
+            "strokeWidth": 0.3
           },
           "encoding": {
             "longitude": {
-              "field": "lon_cell",
+              "field": "lon0",
               "type": "quantitative"
             },
             "latitude": {
-              "field": "lat_cell",
+              "field": "lat0",
               "type": "quantitative"
             },
             "color": {
@@ -130,19 +138,25 @@
             "tooltip": [
               {
                 "field": "calls",
-                "title": "Recordings in this cell",
+                "title": "Recordings in this 1° cell",
                 "type": "quantitative",
                 "format": ","
               },
               {
-                "field": "lat_cell",
-                "title": "Latitude (cell centre)"
+                "field": "lon0",
+                "title": "Longitude from"
               },
               {
-                "field": "lon_cell",
-                "title": "Longitude (cell centre)"
+                "field": "lat0",
+                "title": "Latitude from"
               }
-            ]
+            ],
+            "longitude2": {
+              "field": "lon1"
+            },
+            "latitude2": {
+              "field": "lat1"
+            }
           }
         }
       ]
@@ -209,12 +223,12 @@
               "filter": "datum.Month >= 3 && datum.Month <= 5"
             },
             {
-              "calculate": "floor(datum['Decimal latitude (WGS84)']) + 0.5",
-              "as": "lat_cell"
+              "calculate": "floor(datum['Decimal longitude (WGS84)'])",
+              "as": "lon0"
             },
             {
-              "calculate": "floor(datum['Decimal longitude (WGS84)']) + 0.5",
-              "as": "lon_cell"
+              "calculate": "floor(datum['Decimal latitude (WGS84)'])",
+              "as": "lat0"
             },
             {
               "aggregate": [
@@ -224,24 +238,32 @@
                 }
               ],
               "groupby": [
-                "lat_cell",
-                "lon_cell"
+                "lon0",
+                "lat0"
               ]
+            },
+            {
+              "calculate": "datum.lon0 + 1",
+              "as": "lon1"
+            },
+            {
+              "calculate": "datum.lat0 + 1",
+              "as": "lat1"
             }
           ],
           "mark": {
-            "type": "square",
-            "size": 150,
-            "opacity": 1,
-            "clip": true
+            "type": "rect",
+            "clip": true,
+            "stroke": "#ffffff",
+            "strokeWidth": 0.3
           },
           "encoding": {
             "longitude": {
-              "field": "lon_cell",
+              "field": "lon0",
               "type": "quantitative"
             },
             "latitude": {
-              "field": "lat_cell",
+              "field": "lat0",
               "type": "quantitative"
             },
             "color": {
@@ -271,19 +293,25 @@
             "tooltip": [
               {
                 "field": "calls",
-                "title": "Recordings in this cell",
+                "title": "Recordings in this 1° cell",
                 "type": "quantitative",
                 "format": ","
               },
               {
-                "field": "lat_cell",
-                "title": "Latitude (cell centre)"
+                "field": "lon0",
+                "title": "Longitude from"
               },
               {
-                "field": "lon_cell",
-                "title": "Longitude (cell centre)"
+                "field": "lat0",
+                "title": "Latitude from"
               }
-            ]
+            ],
+            "longitude2": {
+              "field": "lon1"
+            },
+            "latitude2": {
+              "field": "lat1"
+            }
           }
         }
       ]
@@ -350,12 +378,12 @@
               "filter": "datum.Month >= 6 && datum.Month <= 8"
             },
             {
-              "calculate": "floor(datum['Decimal latitude (WGS84)']) + 0.5",
-              "as": "lat_cell"
+              "calculate": "floor(datum['Decimal longitude (WGS84)'])",
+              "as": "lon0"
             },
             {
-              "calculate": "floor(datum['Decimal longitude (WGS84)']) + 0.5",
-              "as": "lon_cell"
+              "calculate": "floor(datum['Decimal latitude (WGS84)'])",
+              "as": "lat0"
             },
             {
               "aggregate": [
@@ -365,24 +393,32 @@
                 }
               ],
               "groupby": [
-                "lat_cell",
-                "lon_cell"
+                "lon0",
+                "lat0"
               ]
+            },
+            {
+              "calculate": "datum.lon0 + 1",
+              "as": "lon1"
+            },
+            {
+              "calculate": "datum.lat0 + 1",
+              "as": "lat1"
             }
           ],
           "mark": {
-            "type": "square",
-            "size": 150,
-            "opacity": 1,
-            "clip": true
+            "type": "rect",
+            "clip": true,
+            "stroke": "#ffffff",
+            "strokeWidth": 0.3
           },
           "encoding": {
             "longitude": {
-              "field": "lon_cell",
+              "field": "lon0",
               "type": "quantitative"
             },
             "latitude": {
-              "field": "lat_cell",
+              "field": "lat0",
               "type": "quantitative"
             },
             "color": {
@@ -412,19 +448,25 @@
             "tooltip": [
               {
                 "field": "calls",
-                "title": "Recordings in this cell",
+                "title": "Recordings in this 1° cell",
                 "type": "quantitative",
                 "format": ","
               },
               {
-                "field": "lat_cell",
-                "title": "Latitude (cell centre)"
+                "field": "lon0",
+                "title": "Longitude from"
               },
               {
-                "field": "lon_cell",
-                "title": "Longitude (cell centre)"
+                "field": "lat0",
+                "title": "Latitude from"
               }
-            ]
+            ],
+            "longitude2": {
+              "field": "lon1"
+            },
+            "latitude2": {
+              "field": "lat1"
+            }
           }
         }
       ]
@@ -491,12 +533,12 @@
               "filter": "datum.Month >= 9 && datum.Month <= 11"
             },
             {
-              "calculate": "floor(datum['Decimal latitude (WGS84)']) + 0.5",
-              "as": "lat_cell"
+              "calculate": "floor(datum['Decimal longitude (WGS84)'])",
+              "as": "lon0"
             },
             {
-              "calculate": "floor(datum['Decimal longitude (WGS84)']) + 0.5",
-              "as": "lon_cell"
+              "calculate": "floor(datum['Decimal latitude (WGS84)'])",
+              "as": "lat0"
             },
             {
               "aggregate": [
@@ -506,24 +548,32 @@
                 }
               ],
               "groupby": [
-                "lat_cell",
-                "lon_cell"
+                "lon0",
+                "lat0"
               ]
+            },
+            {
+              "calculate": "datum.lon0 + 1",
+              "as": "lon1"
+            },
+            {
+              "calculate": "datum.lat0 + 1",
+              "as": "lat1"
             }
           ],
           "mark": {
-            "type": "square",
-            "size": 150,
-            "opacity": 1,
-            "clip": true
+            "type": "rect",
+            "clip": true,
+            "stroke": "#ffffff",
+            "strokeWidth": 0.3
           },
           "encoding": {
             "longitude": {
-              "field": "lon_cell",
+              "field": "lon0",
               "type": "quantitative"
             },
             "latitude": {
-              "field": "lat_cell",
+              "field": "lat0",
               "type": "quantitative"
             },
             "color": {
@@ -553,19 +603,25 @@
             "tooltip": [
               {
                 "field": "calls",
-                "title": "Recordings in this cell",
+                "title": "Recordings in this 1° cell",
                 "type": "quantitative",
                 "format": ","
               },
               {
-                "field": "lat_cell",
-                "title": "Latitude (cell centre)"
+                "field": "lon0",
+                "title": "Longitude from"
               },
               {
-                "field": "lon_cell",
-                "title": "Longitude (cell centre)"
+                "field": "lat0",
+                "title": "Latitude from"
               }
-            ]
+            ],
+            "longitude2": {
+              "field": "lon1"
+            },
+            "latitude2": {
+              "field": "lat1"
+            }
           }
         }
       ]

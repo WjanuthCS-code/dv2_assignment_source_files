@@ -29,14 +29,14 @@
     <div class="wrap">
       <p class="kicker">A data story about Australian frogs</p>
       <h1>The Fading Chorus</h1>
-      <p class="lede">Australia is home to more than 240 kinds of frog, and almost all of them live nowhere else on Earth.
+      <p class="lede">Australia is home to about 240 known native frog species.<sup><a class="ref" href="#refs">1</a></sup>
         Since the 1980s, many have quietly disappeared from the creeks and swamps where they once called.
         This page follows the data: who is declining, who is bouncing back, and when frogs sing.</p>
       <p class="byline">By <strong>Walahewage Januth Sumathiratne</strong> · FIT3179 Data Visualisation 2 · October 2026</p>
 
       <div class="pure-g stats">
         <div class="pure-u-1-2 pure-u-md-1-4"><div class="stat"><span class="num">1.18M</span><span class="lbl">frog calls recorded by citizen scientists with FrogID (2017–2024)</span></div></div>
-        <div class="pure-u-1-2 pure-u-md-1-4"><div class="stat"><span class="num">215</span><span class="lbl">species heard in those recordings</span></div></div>
+        <div class="pure-u-1-2 pure-u-md-1-4"><div class="stat"><span class="num">214</span><span class="lbl">native frog species heard in those recordings, plus the Cane Toad</span></div></div>
         <div class="pure-u-1-2 pure-u-md-1-4"><div class="stat"><span class="num">53</span><span class="lbl">frogs listed as threatened or extinct nationally</span></div></div>
         <div class="pure-u-1-2 pure-u-md-1-4"><div class="stat alarm"><span class="num">−97%</span><span class="lbl">average fall in threatened frog numbers since 1985</span></div></div>
       </div>
@@ -50,13 +50,12 @@
       <div class="wrap">
         <p class="section-num">01</p>
         <h2>Meet Australia's frogs</h2>
-        <p class="intro">Australian frogs belong to a handful of families. Tree frogs and the ground-dwelling "froglets" make up most of the species we hear.
-          Each box below is one species: switch between counting <em>species</em> and counting <em>recordings</em> to see how a few common frogs dominate what people hear,
-          while threatened species (coloured) are rarely heard at all.</p>
+        <p class="intro">Australian frogs belong to a handful of families. Tree frogs and the ground-dwelling froglets and toadlets make up most of the species
+          that citizen scientists record. Each box below is one family, split by how many of its species are nationally threatened.
+          Most of the threatened species are froglets, toadlets or tree frogs.</p>
         <div id="vis_treemap" class="vis vis-wide"></div>
-        <p class="note">Switch to <em>Number of recordings</em>: the most-heard threatened frog is the Endangered Sloane's Froglet (2,777 recordings),
-          while many threatened species have fewer than 100. Only 24 of the 53 nationally threatened frogs appear in FrogID's public records. The others are extinct, too rare to be recorded,
-          or have their records withheld to protect them.</p>
+        <p class="note">Threatened frogs are also rarely heard: the most-recorded threatened species, the Endangered Sloane's Froglet, has 2,777 FrogID
+          recordings, compared with almost 220,000 for the Common Eastern Froglet. Fewer than half of the 53 nationally listed frogs appear in FrogID's public records at all.</p>
       </div>
     </section>
 
@@ -66,7 +65,7 @@
         <p class="section-num">02</p>
         <h2>A silent crisis</h2>
         <p class="intro">Scientists have counted threatened frogs at hundreds of sites for decades. Combined into a single index, the numbers tell a stark story:
-          on average, threatened frog populations are now around 3% of what they were in 1985. A major cause is <strong>chytrid</strong>, a fungal disease that
+          on average, threatened frog populations are now around 3% of what they were in 1985. A major cause is <strong>chytrid</strong>,<sup><a class="ref" href="#refs">2</a></sup> a fungal disease that
           attacks frogs' skin, which they use to breathe and drink.</p>
         <div id="vis_trend" class="vis vis-wide"></div>
 
@@ -86,8 +85,24 @@
       <div class="wrap">
         <p class="section-num">03</p>
         <h2>Who is declining, who is recovering?</h2>
-        <p class="intro">Not every threatened frog is losing ground. Comparing the first and last count at each monitoring site shows some species are recovering
-          while others continue to slide.</p>
+        <p class="intro">Not every threatened frog is losing ground. Comparing the first and latest count at each monitoring site shows that some species are recovering,
+          while others have fallen at most of the sites where they are watched.</p>
+        <div class="pure-g gutter photo-pair">
+          <div class="pure-u-1 pure-u-md-1-2">
+            <figure class="photo">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Northern_corroboree_frog.jpg/960px-Northern_corroboree_frog.jpg" alt="A small black-and-yellow Northern Corroboree Frog sitting on a gloved hand" loading="lazy">
+              <figcaption><strong>Falling:</strong> the Northern Corroboree Frog had fewer frogs at 73 of its 86 changed monitoring sites.
+                <span class="credit">Photo: RatioTile, CC BY-SA 4.0, via Wikimedia Commons</span></figcaption>
+            </figure>
+          </div>
+          <div class="pure-u-1 pure-u-md-1-2">
+            <figure class="photo">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/The_Green_and_Golden_Bell_Frog.jpg/960px-The_Green_and_Golden_Bell_Frog.jpg" alt="A green and gold frog resting on a striped leaf" loading="lazy">
+              <figcaption><strong>Rising:</strong> the Green and Golden Bell Frog had more frogs at 74 of its 129 changed sites.
+                <span class="credit">Photo: Bernard Spragg, CC0, via Wikimedia Commons</span></figcaption>
+            </figure>
+          </div>
+        </div>
         <div id="vis_diverging" class="vis vis-wide"></div>
         <div class="pure-g gutter">
           <div class="pure-u-1 pure-u-md-3-5">
@@ -97,7 +112,7 @@
             <div class="aside">
               <h3>Reading the map</h3>
               <p>Scientists survey threatened frogs at hundreds of sites, mostly in the south-east where the biggest programs run.
-                Large circles in Victoria and the Snowy Mountains are long-running programs for the Southern Bell Frog and the corroboree frogs.</p>
+                The largest circles are long-running programs: the Victorian Volcanic Plain (Southern Bell Frog), Bondo in NSW (Northern Corroboree Frog) and the Hunter region (Green and Golden Bell Frog).</p>
               <p>Red regions are where most sites now have fewer frogs than when monitoring began; blue regions are where most have more.
                 Site locations are shown only by region to protect the frogs.</p>
             </div>
@@ -114,7 +129,7 @@
       <div class="wrap">
         <p class="section-num">04</p>
         <h2>When frogs breed</h2>
-        <p class="intro">Male frogs call to attract a mate, so a frog call is a sign of breeding. Recordings from FrogID show each species has its own season.</p>
+        <p class="intro">Male frogs call to attract a mate, so a frog call is a sign of breeding. FrogID recordings of eight featured species show that most call loudest from October to January, though a few, like the Common Mist Frog, call almost all year.</p>
         <div class="pure-g gutter">
           <div class="pure-u-1 pure-u-md-2-5">
             <div id="vis_radial" class="vis"></div>
@@ -132,16 +147,20 @@
       <div class="wrap">
         <p class="section-num">05</p>
         <h2>The invader</h2>
-        <p class="intro">Cane Toads were released in Queensland in 1935 to control beetles in sugarcane. They are poisonous to many native animals and now
-          spread across northern Australia.</p>
+        <p class="intro">Cane Toads were released near Cairns, Queensland, in 1935 to control beetles in sugarcane.<sup><a class="ref" href="#refs">3</a></sup> Their poison can kill native predators, and they have
+          spread across northern Australia as far as the Kimberley.</p>
         <div class="pure-g gutter">
           <div class="pure-u-1 pure-u-md-2-3">
             <div id="vis_toadmap" class="vis"></div>
           </div>
           <div class="pure-u-1 pure-u-md-1-3">
             <div class="aside">
+              <figure class="photo photo-tall">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Rhinella_marina_336297564.jpg/960px-Rhinella_marina_336297564.jpg" alt="A large brown Cane Toad held in a person's hand" loading="lazy">
+                <figcaption><span class="credit">Cane Toad. Photo: Peter Crowcroft, CC BY 4.0, via Wikimedia Commons</span></figcaption>
+              </figure>
               <h3>Why toads matter for frogs</h3>
-              <p>Native animals that eat Cane Toads are often poisoned, and toads compete with native frogs for food and breeding ponds.</p>
+              <p>The poison Cane Toads produce can kill many native predators, and some predator populations have declined as toads spread.<sup><a class="ref" href="#refs">3</a></sup></p>
               <p>Most recordings come from south-east Queensland, where many people live and record frogs. Dots across the Top End and the
                 Kimberley show how far the toad has spread from where it was released.</p>
               <p class="small">More dots in a place can mean more toads, or simply more people recording, so this map shows where toads are
@@ -179,6 +198,11 @@
               <a href="https://collections.ala.org.au/public/show/dr14760">Atlas of Living Australia</a>
               (download DOI <a href="https://doi.org/10.26197/ala.7c8996cd-871e-470b-b02b-cd4b29922351">10.26197/ala.7c8996cd</a>). CC BY-NC 4.0.
               Locations of sensitive species are blurred to about 11 km by FrogID.</li>
+            <li><strong>Photos</strong> (Wikimedia Commons):
+              <a href="https://commons.wikimedia.org/wiki/File:Northern_corroboree_frog.jpg">Northern Corroboree Frog</a> by RatioTile (<a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>);
+              <a href="https://commons.wikimedia.org/wiki/File:The_Green_and_Golden_Bell_Frog.jpg">Green and Golden Bell Frog</a> by Bernard Spragg (<a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>);
+              <a href="https://commons.wikimedia.org/wiki/File:Rhinella_marina_336297564.jpg">Cane Toad</a> by Peter Crowcroft (<a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a>).
+              Photos are shown unaltered apart from cropping to fit the layout.</li>
             <li><strong>State boundaries</strong>: <a href="https://github.com/rowanhogan/australian-states">rowanhogan/australian-states</a>
               (derived from ABS boundaries), converted to TopoJSON with mapshaper.</li>
           </ul>
@@ -186,11 +210,17 @@
         <div class="pure-u-1 pure-u-md-1-2">
           <h4>Notes</h4>
           <p>All files are used as downloaded. The only change: the FrogID record download was reduced from 59 to the 8 columns used here
-            (no rows or values changed) to keep the page fast. All filtering, counting and joining happens inside the Vega-Lite specifications.</p>
+            (no rows or values changed) to keep the page fast. All filtering, counting and joining happens inside the Vega-Lite and Vega specifications.</p>
+          <h4 id="refs">References</h4>
+          <ol class="refs">
+            <li>Rowley, J. (2018). <a href="https://australian.museum/learn/news/blog/frogid-citizen-scientists-are-putting-frogs-on-the-map/">FrogID citizen scientists are putting frogs on the map</a>. Australian Museum.</li>
+            <li>Berger, L. et al. (1998). Chytridiomycosis causes amphibian mortality associated with population declines in the rain forests of Australia and Central America. <em>PNAS</em> 95(15), 9031–9036. <a href="https://doi.org/10.1073/pnas.95.15.9031">doi:10.1073/pnas.95.15.9031</a></li>
+            <li>National Museum of Australia. <a href="https://www.nma.gov.au/defining-moments/resources/introduction-of-cane-toads">Defining Moments: Introduction of cane toads</a>.</li>
+          </ol>
           <h4>Author</h4>
-          <p>Walahewage Januth Sumathiratne, [Student ID] · Created October 2026 for FIT3179, Monash University.</p>
+          <p>Walahewage Januth Sumathiratne, 35221615 · Created October 2026 for FIT3179, Monash University.</p>
           <h4>Use of AI</h4>
-          <p>Generative AI (Claude, Anthropic) was used to help find data sources, draft chart code and proofread text.</p>
+          <p>Generative AI (Claude, Anthropic) was used throughout this project: to help find and evaluate data sources, draft and debug the Vega-Lite and Vega chart specifications, HTML and CSS, check calculations against the source data, and proofread the text. The author directed the work and reviewed all data choices, designs and final content.</p>
         </div>
       </div>
     </div>

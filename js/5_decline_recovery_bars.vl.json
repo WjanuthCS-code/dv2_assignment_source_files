@@ -2,8 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Diverging bar chart: for each threatened frog species, the number of monitoring sites where the last count was lower (left) or higher (right) than the first count. Calculated from the TSX monitoring time series.",
   "title": {
-    "text": "At most sites, corroboree and Baw Baw frogs are still disappearing",
-    "subtitle": "Monitoring sites where the latest count was lower (left) or higher (right) than the first. Species with at least 5 sites. Sites with no change are not shown."
+    "text": "Corroboree and Baw Baw frogs fell at most of their monitoring sites",
+    "subtitle": ["For each monitoring site, the latest survey count is compared with the first (surveys span 1950–2022).", "Species with at least 5 sites that changed; sites with no change are not shown."]
   },
   "data": {"url": "data/tsx_frog_timeseries.csv"},
   "transform": [
@@ -46,7 +46,7 @@
       }
     },
     {
-      "width": 620,
+      "width": 580,
       "height": {"step": 26},
       "layer": [
         {

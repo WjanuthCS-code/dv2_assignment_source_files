@@ -2,44 +2,203 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Ridgeline chart: share of FrogID recordings per month for each featured species, showing each species' calling (breeding) season.",
   "title": {
-    "text": "Every species keeps its own calendar",
-    "subtitle": "Share of each species' recordings by month, sorted by peak month"
+    "text": "Most frogs call loudest in late spring",
+    "subtitle": [
+      "Share of each species' recordings by month. Six of the eight peak in November.",
+      "Numbers in brackets are recordings; Fleay's Barred Frog has few, so its shape is less certain."
+    ]
   },
-  "data": {"url": "data/frogid_featured_records.csv"},
+  "data": {
+    "url": "data/frogid_featured_records.csv"
+  },
   "transform": [
-    {"calculate": "{'Litoria aurea': 'Green and Golden Bell Frog', 'Litoria raniformis': 'Southern Bell Frog', 'Mixophyes iteratus': 'Giant Barred Frog', 'Mixophyes fleayi': 'Fleay\\'s Barred Frog', 'Litoria rheocola': 'Common Mist Frog', 'Litoria chloris': 'Red-eyed Tree Frog', 'Rhinella marina': 'Cane Toad', 'Pseudophryne australis': 'Red-crowned Toadlet'}[datum.Species]", "as": "name"},
-    {"aggregate": [{"op": "count", "as": "calls"}], "groupby": ["name", "Month"]},
-    {"impute": "calls", "key": "Month", "keyvals": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "groupby": ["name"], "value": 0},
-    {"joinaggregate": [{"op": "sum", "field": "calls", "as": "total"}], "groupby": ["name"]},
-    {"calculate": "datum.calls / datum.total", "as": "share"},
-    {"joinaggregate": [{"op": "argmax", "field": "share", "as": "peak"}], "groupby": ["name"]},
-    {"calculate": "datum.peak.Month", "as": "peak_month"},
-    {"calculate": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.Month - 1]", "as": "month_name"}
+    {
+      "calculate": "{'Litoria aurea': 'Green and Golden Bell Frog', 'Litoria raniformis': 'Southern Bell Frog', 'Mixophyes iteratus': 'Giant Barred Frog', 'Mixophyes fleayi': 'Fleay\\'s Barred Frog', 'Litoria rheocola': 'Common Mist Frog', 'Litoria chloris': 'Red-eyed Tree Frog', 'Rhinella marina': 'Cane Toad', 'Pseudophryne australis': 'Red-crowned Toadlet'}[datum.Species]",
+      "as": "name"
+    },
+    {
+      "aggregate": [
+        {
+          "op": "count",
+          "as": "calls"
+        }
+      ],
+      "groupby": [
+        "name",
+        "Month"
+      ]
+    },
+    {
+      "impute": "calls",
+      "key": "Month",
+      "keyvals": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "groupby": [
+        "name"
+      ],
+      "value": 0
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "sum",
+          "field": "calls",
+          "as": "total"
+        }
+      ],
+      "groupby": [
+        "name"
+      ]
+    },
+    {
+      "calculate": "datum.name + ' (' + format(datum.total, ',') + ')'",
+      "as": "label"
+    },
+    {
+      "calculate": "datum.calls / datum.total",
+      "as": "share"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "argmax",
+          "field": "share",
+          "as": "peak"
+        }
+      ],
+      "groupby": [
+        "name"
+      ]
+    },
+    {
+      "calculate": "datum.peak.Month",
+      "as": "peak_month"
+    },
+    {
+      "calculate": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.Month - 1]",
+      "as": "month_name"
+    }
   ],
   "facet": {
     "row": {
-      "field": "name", "type": "nominal", "title": null,
-      "sort": {"field": "peak_month", "op": "min", "order": "ascending"},
-      "header": {"labelAngle": 0, "labelAlign": "left", "labelOrient": "left", "labelPadding": 0, "labelFontSize": 12, "labelColor": "#1e2b23", "labelLimit": 170, "labelBaseline": "bottom"}
+      "field": "label",
+      "type": "nominal",
+      "title": null,
+      "sort": {
+        "field": "peak_month",
+        "op": "min",
+        "order": "ascending"
+      },
+      "header": {
+        "labelAngle": 0,
+        "labelAlign": "left",
+        "labelOrient": "left",
+        "labelPadding": 0,
+        "labelFontSize": 12,
+        "labelColor": "#1e2b23",
+        "labelLimit": 170,
+        "labelBaseline": "bottom"
+      }
     }
   },
   "spacing": -18,
   "spec": {
-    "width": 400,
+    "width": 370,
     "height": 46,
-    "view": {"stroke": null},
-    "mark": {"type": "area", "interpolate": "monotone", "fillOpacity": 0.85, "stroke": "#eceadf", "strokeWidth": 1.5, "color": "#2f6b3a"},
+    "view": {
+      "stroke": null
+    },
+    "mark": {
+      "type": "area",
+      "interpolate": "monotone",
+      "fillOpacity": 0.85,
+      "stroke": "#eceadf",
+      "strokeWidth": 1.5,
+      "color": "#2f6b3a"
+    },
     "encoding": {
       "x": {
-        "field": "Month", "type": "quantitative", "title": null,
-        "scale": {"domain": [1, 12], "nice": false},
-        "axis": {"values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "labelExpr": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.value - 1]", "grid": true, "gridColor": "#dcd8ca", "gridDash": [], "domain": false, "ticks": false}
+        "field": "Month",
+        "type": "quantitative",
+        "title": null,
+        "scale": {
+          "domain": [
+            1,
+            12
+          ],
+          "nice": false
+        },
+        "axis": {
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12
+          ],
+          "labelExpr": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.value - 1]",
+          "grid": true,
+          "gridColor": "#dcd8ca",
+          "gridDash": [],
+          "domain": false,
+          "ticks": false
+        }
       },
-      "y": {"field": "share", "type": "quantitative", "axis": null, "scale": {"domain": [0, 0.3], "range": [46, -18]}},
+      "y": {
+        "field": "share",
+        "type": "quantitative",
+        "axis": null,
+        "scale": {
+          "domain": [
+            0,
+            0.35
+          ],
+          "range": [
+            46,
+            -18
+          ]
+        }
+      },
       "tooltip": [
-        {"field": "name", "title": "Species"},
-        {"field": "month_name", "title": "Month"},
-        {"field": "share", "title": "Share of recordings", "type": "quantitative", "format": ".0%"}
+        {
+          "field": "name",
+          "title": "Species"
+        },
+        {
+          "field": "month_name",
+          "title": "Month"
+        },
+        {
+          "field": "share",
+          "title": "Share of recordings",
+          "type": "quantitative",
+          "format": ".0%"
+        },
+        {
+          "field": "total",
+          "title": "Recordings of this species",
+          "type": "quantitative",
+          "format": ","
+        }
       ]
     }
   }

@@ -3,7 +3,7 @@
   "description": "Threatened Frog Index 1985-2022 (TSX). Line = average abundance relative to 1985; band = 95% credible interval.",
   "title": {
     "text": "Threatened frogs have lost almost all of their numbers since 1985",
-    "subtitle": "Average abundance of 28 threatened frog species, compared with 1985 (= 100). The shaded band shows the range the true value is likely to fall in."
+    "subtitle": ["Average abundance of 28 threatened and near-threatened frogs, compared with 1985 (= 100).", "The shaded band shows where the true value likely lies. It is wide in early years, when few species were being counted."]
   },
   "width": "container",
   "height": 330,
@@ -32,7 +32,7 @@
       }
     },
     {
-      "mark": {"type": "line", "color": "#1d4527", "strokeWidth": 2.5, "interpolate": "monotone"},
+      "mark": {"type": "line", "color": "#1d4527", "strokeWidth": 2.5, "interpolate": "linear"},
       "encoding": {
         "y": {
           "field": "index",

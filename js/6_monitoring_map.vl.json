@@ -3,7 +3,7 @@
   "description": "Proportional symbol map: TSX frog monitoring regions. Circle size = number of monitored sites; colour = share of sites where the latest count was lower than the first.",
   "title": {
     "text": "Where frogs are being watched",
-    "subtitle": "Each circle is a monitoring region. Click a legend colour to highlight regions."
+    "subtitle": ["Each circle is a monitoring region. Mostly falling = more than 60% of its sites had fewer frogs at the latest count", "than at the first; mostly rising = under 40%. Click a legend colour to highlight regions."]
   },
   "width": "container",
   "height": 430,
