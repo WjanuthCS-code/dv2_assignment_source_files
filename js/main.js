@@ -14,6 +14,9 @@ const charts = [
   ["#vis_toadmap",    "js/11_cane_toad_map.vl.json"]
 ];
 
+// Version tag stops browsers from showing stale cached chart files after an update.
+const SPEC_VERSION = "20261021b";
+
 const embedOptions = {
   actions: false,          // hide the "..." menu
   renderer: "svg",
@@ -21,7 +24,7 @@ const embedOptions = {
 };
 
 charts.forEach(([el, spec]) => {
-  vegaEmbed(el, spec, embedOptions)
+  vegaEmbed(el, spec + "?v=" + SPEC_VERSION, embedOptions)
     .then(() => document.querySelector(el).classList.remove("placeholder"))
     .catch(console.error);
 });

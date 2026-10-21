@@ -79,7 +79,10 @@ section.alt { background: var(--paper-alt); }
 /* ----- Chart containers ----- */
 .vis { width: 100%; margin: 12px 0 24px; min-height: 120px; }
 .vis-wide { margin-bottom: 36px; }
-.vis .vega-embed { width: 100%; }
+.vis .vega-embed { width: 100%; max-width: 100%; }
+/* Charts with a fixed drawing size shrink to fit narrow screens (no sideways scrolling) */
+.vis svg, .vis canvas { max-width: 100%; height: auto; }
+img { max-width: 100%; }
 .vis .vega-embed summary { display: none; }         /* hide the "..." actions menu */
 .gutter > [class*="pure-u"] { box-sizing: border-box; padding-right: 32px; }
 .gutter > [class*="pure-u"]:last-child { padding-right: 0; }
